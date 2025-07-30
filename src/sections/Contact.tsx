@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { FiMail, FiUser, FiMessageSquare, FiSend, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
 import { db, analytics } from '../firebase/config';
 import { collection, addDoc, serverTimestamp, getDocs, limit, query } from 'firebase/firestore';
-import { logEvent } from 'firebase/analytics';
+import { logEvent, Analytics } from 'firebase/analytics';
 
 // Animation variants for form elements
 const formVariants = {
@@ -53,7 +53,7 @@ const Contact = () => {
         
         // Test Analytics by logging a test event (only if analytics is available)
         if (analytics) {
-          logEvent(analytics, 'page_view', {
+          logEvent(analytics as Analytics, 'page_view', {
             page_title: 'Contact',
             page_location: window.location.href,
           });
@@ -100,7 +100,7 @@ const Contact = () => {
       
       // Log form submission event to Analytics (only if analytics is available)
       if (analytics) {
-        logEvent(analytics, 'form_submit', {
+        logEvent(analytics as Analytics, 'form_submit', {
           form_id: 'contact_form',
           document_id: docRef.id
         });

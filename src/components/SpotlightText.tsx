@@ -54,11 +54,11 @@ const SpotlightText: React.FC<SpotlightTextProps> = memo(({
     };
     
     // Add event listener to document for better tracking
-    document.addEventListener('mousemove', handleMouseMove, options);
+    document.addEventListener('mousemove', handleMouseMove as EventListener, options);
     
     // Cleanup
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove, options);
+      document.removeEventListener('mousemove', handleMouseMove as EventListener, options);
       cancelAnimationFrame(rafId);
     };
   }, []);
@@ -67,7 +67,7 @@ const SpotlightText: React.FC<SpotlightTextProps> = memo(({
     <Component 
       ref={elementRef as any}
       className={`spotlight-text ${className}`}
-      {...({ 'data-text': textContent } as any)}
+      data-text={textContent}
       style={{
         willChange: 'mask, -webkit-mask', // Performance hint for browsers
         transform: 'translateZ(0)' // Force GPU acceleration

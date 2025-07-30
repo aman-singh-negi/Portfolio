@@ -1,7 +1,7 @@
 // config.ts
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getAnalytics } from 'firebase/analytics';
+import { getAnalytics, Analytics } from 'firebase/analytics';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -17,7 +17,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-let analytics = null;
+let analytics: Analytics | null = null;
 if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
   try {
     analytics = getAnalytics(app);

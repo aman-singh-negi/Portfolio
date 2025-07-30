@@ -13,7 +13,8 @@ const FloatingCube = () => {
   useFrame((state) => {
     if (meshRef.current && wireframeRef.current) {
       // Pulse effect for the main cube
-      meshRef.current.material.emissiveIntensity = 0.5 + Math.sin(state.clock.elapsedTime) * 0.3;
+      const material = meshRef.current.material as THREE.MeshStandardMaterial;
+      material.emissiveIntensity = 0.5 + Math.sin(state.clock.elapsedTime) * 0.3;
       
       // Rotate wireframe slightly differently for interesting effect
       wireframeRef.current.rotation.x = meshRef.current.rotation.x + Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
