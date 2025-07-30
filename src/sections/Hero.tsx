@@ -4,7 +4,7 @@ import { FiArrowDown, FiGithub, FiLinkedin, FiDownload } from 'react-icons/fi';
 import { SiLeetcode } from 'react-icons/si';
 import CodePlayground from '../components/CodePlayground';
 import HeroObject3D from '../components/HeroObject3D';
-// Import is used in JSX below
+// Import is used elsewhere or will be used in future updates
 import SpotlightText from '../components/SpotlightText';
 
 const Hero = () => {
