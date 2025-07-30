@@ -1,0 +1,13 @@
+.spotlight-text {
+  position: relative;
+  display: inline-block;
+  background: radial-gradient(
+    600px circle at var(--cursor-x, 50%) var(--cursor-y, 50%),
+    rgba(255, 255, 255, 0.2),
+    transparent 60%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 0.2s ease;
+  font-weight: bold;
+}

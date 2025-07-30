@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMenu, FiX, FiCode, FiAward } from 'react-icons/fi';
+import { FiMenu, FiX, FiCode } from 'react-icons/fi'; // Removed FiAward
 import ThemeToggle from './ThemeToggle';
 
 type NavLink = {
@@ -19,67 +19,56 @@ const navLinks: NavLink[] = [
   { name: 'Contact', href: '#contact' },
 ];
 
-// This will be handled via props now
-
 interface NavbarProps {
-  onCertificatesClick?: () => void;
-  onHomeClick?: () => void;
+  onHomeClick?: () => void; // Removed unused onCertificatesClick
 }
 
-const Navbar = ({ onCertificatesClick, onHomeClick }: NavbarProps) => {
+const Navbar = ({ onHomeClick }: NavbarProps) => {
   const [activeSection, setActiveSection] = useState('home');
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
 
-  // Memoized scroll handler for better performance
   const handleScroll = useCallback(() => {
-    // Use requestAnimationFrame for smoother performance
     requestAnimationFrame(() => {
-      // Update navbar style based on scroll position
       setScrolled(window.scrollY > 50);
-      
-      // Hide/show navbar based on scroll direction
+
       const currentScrollPos = window.scrollY;
       const isVisible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
-      
+
       setPrevScrollPos(currentScrollPos);
       setVisible(isVisible);
-      
-      // Update active section based on scroll position - optimize selector
+
       const sections = document.querySelectorAll('section[id]');
       let foundActive = false;
-      
-      // Process sections in reverse order (bottom to top) for better accuracy
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         const sectionTop = section.getBoundingClientRect().top;
         const sectionId = section.getAttribute('id');
-        
+
         if (sectionTop < 100 && sectionTop > -100 && sectionId) {
           setActiveSection(sectionId);
           foundActive = true;
-          break; // Stop after finding the first visible section
+          break;
         }
       }
-      
-      // If no section is visible (e.g., at the very top), default to home
+
       if (!foundActive && window.scrollY < 100) {
         setActiveSection('home');
       }
     });
   }, [prevScrollPos]);
 
-  // Throttle scroll event for better performance
   useEffect(() => {
     let ticking = false;
-    
+
     const scrollListener = () => {
       if (!ticking) {
         ticking = true;
         handleScroll();
-        setTimeout(() => ticking = false, 100); // Throttle to max 10 updates per second
+        setTimeout(() => (ticking = false), 100);
       }
     };
 
@@ -88,17 +77,15 @@ const Navbar = ({ onCertificatesClick, onHomeClick }: NavbarProps) => {
   }, [handleScroll]);
 
   return (
-    // Update the navbar container
-    <header 
+    <header
       className={`fixed w-full z-40 transition-all duration-300 
-        ${scrolled 
-          ? 'py-3 glass-morphism shadow-xl border-b border-gray-200/10 dark:border-gray-800/10' 
+        ${scrolled
+          ? 'py-3 glass-morphism shadow-xl border-b border-gray-200/10 dark:border-gray-800/10'
           : 'py-5 bg-light/50 dark:bg-dark/50 backdrop-blur-sm'}
         ${visible ? 'top-0' : '-top-20'}`}
     >
       <nav className="container mx-auto px-4 sm:px-6 flex justify-between items-center relative">
-        {/* Logo */}
-        <motion.a 
+        <motion.a
           href="#home"
           className="flex items-center space-x-2 group"
           initial={{ opacity: 0, x: -20 }}
@@ -108,21 +95,17 @@ const Navbar = ({ onCertificatesClick, onHomeClick }: NavbarProps) => {
           <span className="relative overflow-hidden rounded-full p-2 bg-gradient-to-br from-accent1/20 to-accent2/20 group-hover:from-accent1/30 group-hover:to-accent2/30 transition-all duration-300">
             <FiCode className="text-gray-700 dark:text-accent1 w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
           </span>
-          <span className="text-2xl font-bold gradient-text">
-            Aman
-          </span>
+          <span className="text-2xl font-bold gradient-text">Aman</span>
         </motion.a>
 
-        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-1">
           {navLinks.map((link, index) => (
-            // Update the nav links
             <motion.a
               key={link.name}
               href={link.href}
               className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 
-                ${activeSection === link.href.substring(1) 
-                  ? 'text-white dark:text-white bg-gradient-to-r from-accent1 to-accent2 shadow-md' 
+                ${activeSection === link.href.substring(1)
+                  ? 'text-white dark:text-white bg-gradient-to-r from-accent1 to-accent2 shadow-md'
                   : 'text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-accent2 hover:bg-gray-100/50 dark:hover:bg-accent2/5'}`}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -137,7 +120,7 @@ const Navbar = ({ onCertificatesClick, onHomeClick }: NavbarProps) => {
             >
               {link.name}
               {activeSection === link.href.substring(1) && (
-                <motion.span 
+                <motion.span
                   className="absolute bottom-0 left-0 right-0 mx-auto w-1/2 h-0.5 bg-gradient-to-r from-accent1 to-accent2"
                   layoutId="navbar-indicator"
                   transition={{ type: 'spring', stiffness: 300, damping: 30 }}
@@ -145,11 +128,8 @@ const Navbar = ({ onCertificatesClick, onHomeClick }: NavbarProps) => {
               )}
             </motion.a>
           ))}
-          
-          {/* Theme toggle is now in a separate position */}
         </div>
 
-        {/* Mobile Menu Button */}
         <div className="flex items-center md:hidden">
           <motion.button
             onClick={() => setIsOpen(!isOpen)}
@@ -158,14 +138,15 @@ const Navbar = ({ onCertificatesClick, onHomeClick }: NavbarProps) => {
             whileHover={{ scale: 1.1 }}
             aria-label="Toggle menu"
           >
-            {isOpen 
-              ? <FiX size={24} className="text-gray-700 dark:text-accent2" /> 
-              : <FiMenu size={24} className="text-gray-700 dark:text-accent1" />}
+            {isOpen ? (
+              <FiX size={24} className="text-gray-700 dark:text-accent2" />
+            ) : (
+              <FiMenu size={24} className="text-gray-700 dark:text-accent1" />
+            )}
           </motion.button>
         </div>
       </nav>
 
-      {/* Mobile Navigation */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -181,9 +162,9 @@ const Navbar = ({ onCertificatesClick, onHomeClick }: NavbarProps) => {
                   key={link.name}
                   href={link.href}
                   className={`text-2xl font-medium flex items-center space-x-2 p-3 rounded-lg
-                    ${activeSection === link.href.substring(1) 
-                      ? 'text-accent1 bg-accent1/10' 
-                      : 'text-gray-700 dark:text-gray-300'}`}
+                    ${activeSection === link.href.substring(1)
+                    ? 'text-accent1 bg-accent1/10'
+                    : 'text-gray-700 dark:text-gray-300'}`}
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -193,7 +174,7 @@ const Navbar = ({ onCertificatesClick, onHomeClick }: NavbarProps) => {
                   <span className="relative overflow-hidden">
                     {link.name}
                     {activeSection === link.href.substring(1) && (
-                      <motion.span 
+                      <motion.span
                         className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-accent1 to-accent2"
                         layoutId="mobile-navbar-indicator"
                       />
@@ -201,14 +182,11 @@ const Navbar = ({ onCertificatesClick, onHomeClick }: NavbarProps) => {
                   </span>
                 </motion.a>
               ))}
-              
-              {/* Mobile menu only shows main navigation links */}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Theme Toggle - Now positioned within the navbar */}
       <div className="absolute right-16 sm:right-20 md:right-0 top-1/2 transform -translate-y-1/2">
         <ThemeToggle />
       </div>
@@ -216,5 +194,4 @@ const Navbar = ({ onCertificatesClick, onHomeClick }: NavbarProps) => {
   );
 };
 
-// Memoize the entire component for better performance
 export default memo(Navbar);

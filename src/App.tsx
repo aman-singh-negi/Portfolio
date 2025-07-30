@@ -14,6 +14,8 @@ import Achievements from './sections/Achievements';
 import Certificates from './sections/Certificates';
 import Contact from './sections/Contact';
 
+import './spotlight.css';
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
