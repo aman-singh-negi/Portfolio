@@ -1,84 +1,43 @@
-import React, { useRef, useEffect, memo } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import '../styles/SpotlightText.css';
 
-interface SpotlightTextProps {
-  children: React.ReactNode;
-  className?: string;
-  as?: keyof JSX.IntrinsicElements;
-}
+const SpotlightText = () => {
+  const spotlightRef = useRef<HTMLDivElement>(null);
+  const [spotlightPosition, setSpotlightPosition] = useState({ x: 0, y: 0 });
 
-const SpotlightText: React.FC<SpotlightTextProps> = memo(({ 
-  children, 
-  className = '', 
-  as: Component = 'span' 
-}) => {
-  const textContent = typeof children === 'string' ? children : '';
-  const elementRef = useRef<HTMLElement>(null);
-  
   useEffect(() => {
-    // Skip effect for SSR
-    if (typeof window === 'undefined') return;
-    
-    // Performance optimization: Use passive listeners
-    const options = { passive: true };
-    
-    // Use requestAnimationFrame for smoother cursor tracking
-    let rafId: number;
-    let lastX = 0;
-    let lastY = 0;
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      // Cancel any pending animation frame
-      cancelAnimationFrame(rafId);
-      
-      // Schedule the update on the next animation frame
-      rafId = requestAnimationFrame(() => {
-        if (!elementRef.current) return;
-        
-        // Get element's bounding rectangle
-        const rect = elementRef.current.getBoundingClientRect();
-        
-        // Calculate cursor position relative to the element
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        // Only update if position changed significantly (throttling)
-        if (Math.abs(x - lastX) > 5 || Math.abs(y - lastY) > 5) {
-          lastX = x;
-          lastY = y;
-          
-          // Apply the cursor position as CSS variables
-          elementRef.current.style.setProperty('--cursor-x', `${x}px`);
-          elementRef.current.style.setProperty('--cursor-y', `${y}px`);
-        }
-      });
+    const spotlight = spotlightRef.current;
+    if (!spotlight) return;
+
+    const updateSpotlight = (e: MouseEvent) => {
+      const rect = spotlight.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      setSpotlightPosition({ x, y });
     };
-    
-    // Add event listener to document for better tracking
-    document.addEventListener('mousemove', handleMouseMove as EventListener, options);
-    
-    // Cleanup
+
+    const options: AddEventListenerOptions = { passive: true };
+    document.addEventListener('mousemove', updateSpotlight, options);
+
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove as EventListener, options);
-      cancelAnimationFrame(rafId);
+      document.removeEventListener('mousemove', updateSpotlight, options);
     };
   }, []);
-  
-  return (
-    <Component 
-      ref={elementRef as any}
-      className={`spotlight-text ${className}`}
-      data-text={textContent}
-      style={{
-        willChange: 'mask, -webkit-mask', // Performance hint for browsers
-        transform: 'translateZ(0)' // Force GPU acceleration
-      }}
-    >
-      {children}
-    </Component>
-  );
-});
 
-// Display name for debugging
-SpotlightText.displayName = 'SpotlightText';
+  return (
+    <div ref={spotlightRef} className="spotlight-container">
+      <motion.div
+        className="spotlight"
+        animate={{
+          left: spotlightPosition.x,
+          top: spotlightPosition.y,
+        }}
+        transition={{ type: 'spring', stiffness: 300, damping: 40 }}
+      />
+      <h1 className="spotlight-text">Welcome to My Portfolio</h1>
+    </div>
+  );
+};
 
 export default SpotlightText;
