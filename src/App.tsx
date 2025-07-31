@@ -13,6 +13,7 @@ import Experience from './sections/Experience';
 import Achievements from './sections/Achievements';
 import Certificates from './sections/Certificates';
 import Contact from './sections/Contact';
+import { Analytics } from '@vercel/analytics/react';
 
 import './spotlight.css';
 
@@ -74,7 +75,7 @@ function App() {
       <div className="bg-light dark:bg-dark text-gray-800 dark:text-gray-200 min-h-screen transition-colors duration-300 overflow-x-hidden">
         {/* Loading Screen */}
         {isLoading && <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />}
-        
+        <Analytics />
         {/* Main Content */}
         {!isLoading && (
           <>
