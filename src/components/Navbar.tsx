@@ -20,8 +20,10 @@ const navLinks: NavLink[] = [
 ];
 
 interface NavbarProps {
-  onHomeClick?: () => void; // Removed unused onCertificatesClick
+  onHomeClick?: () => void;
+  onCertificatesClick?: () => void;
 }
+
 
 const Navbar = ({ onHomeClick }: NavbarProps) => {
   const [activeSection, setActiveSection] = useState('home');
