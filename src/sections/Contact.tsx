@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiUser, FiMessageSquare, FiSend, FiCheckCircle, FiAlertCircle } from 'react-icons/fi';
 import { db, analytics } from '../firebase/config';
-import { collection, addDoc, serverTimestamp, getDocs, limit, query } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, getDocs, limit, query, Firestore } from 'firebase/firestore';
 import { logEvent, Analytics } from 'firebase/analytics';
 
 // Animation variants for form elements
@@ -47,8 +47,13 @@ const Contact = () => {
   useEffect(() => {
     const testFirebaseConnection = async () => {
       try {
+        // Check if db is defined before attempting to use it
+        if (!db) {
+          throw new Error('Firestore database is not initialized');
+        }
+        
         // Test Firestore connection by querying the messages collection
-        const messagesQuery = query(collection(db, 'messages'), limit(1));
+        const messagesQuery = query(collection(db as Firestore, 'messages'), limit(1));
         await getDocs(messagesQuery);
         
         // Test Analytics by logging a test event (only if analytics is available)
@@ -70,12 +75,17 @@ const Contact = () => {
     testFirebaseConnection();
   }, []);
 
-  // Add this to your JSX to show Firebase connection status
-  {firebaseStatus === 'error' && (
-    <div className="p-4 mb-6 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-lg">
-      <p>There was an issue connecting to our messaging service. Your message may not be delivered.</p>
-    </div>
-  )}
+  // Firebase connection status component
+  const FirebaseErrorMessage = () => {
+    if (firebaseStatus === 'error') {
+      return (
+        <div className="p-4 mb-6 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-lg">
+          <p>There was an issue connecting to our messaging service. Your message may not be delivered.</p>
+        </div>
+      );
+    }
+    return null;
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -90,8 +100,13 @@ const Contact = () => {
     setFormStatus('submitting');
 
     try {
+      // Check if db is defined before attempting to use it
+      if (!db) {
+        throw new Error('Firestore database is not initialized');
+      }
+      
       // Add the message to Firestore
-      const docRef = await addDoc(collection(db, 'messages'), {
+      const docRef = await addDoc(collection(db as Firestore, 'messages'), {
         name: formData.name,
         email: formData.email,
         message: formData.message,
@@ -251,6 +266,9 @@ const Contact = () => {
         </motion.div>
 
         <div className="max-w-3xl mx-auto">
+          {/* Display Firebase connection error if there's an issue */}
+          <FirebaseErrorMessage />
+          
           <motion.form
             ref={formRef}
             onSubmit={handleSubmit}
