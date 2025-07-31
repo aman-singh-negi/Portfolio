@@ -366,6 +366,7 @@ const Contact = () => {
                   className={inputClasses}
                   placeholder="Your name"
                   disabled={formStatus === 'submitting'}
+                  autoComplete="name"
                 />
                 <motion.div 
                   className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-accent1 to-accent2"
@@ -422,6 +423,7 @@ const Contact = () => {
                   className={inputClasses}
                   placeholder="Your email address"
                   disabled={formStatus === 'submitting'}
+                  autoComplete="email"
                 />
                 <motion.div 
                   className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-accent1 to-accent2"
@@ -478,6 +480,7 @@ const Contact = () => {
                   className={`${inputClasses} resize-none`}
                   placeholder="Your message"
                   disabled={formStatus === 'submitting'}
+                  autoComplete="off"
                 />
                 <motion.div 
                   className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-accent1 to-accent2"
