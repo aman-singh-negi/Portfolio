@@ -1,5 +1,5 @@
 // config.ts
-import { initializeApp } from 'firebase/app';
+import { getApps, getApp, initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAnalytics, Analytics } from 'firebase/analytics';
 
@@ -13,10 +13,11 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// ✅ Prevent duplicate initialization
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 
+// ✅ Analytics safely used only on client & non-localhost
 let analytics: Analytics | null = null;
 if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
   try {
