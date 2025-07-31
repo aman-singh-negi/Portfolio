@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 const CustomCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const cursorRef = useRef<HTMLDivElement>(null);
   const [isHoveringInteractive, setIsHoveringInteractive] = useState(false);
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${e.clientX - 6}px, ${e.clientY - 6}px, 0)`;
+      }
     };
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
@@ -35,32 +36,25 @@ const CustomCursor = () => {
   }, []);
 
   return (
-    <motion.div
+    <div
+      ref={cursorRef}
       className="custom-cursor"
-      animate={{
-        x: mousePosition.x - 6,
-        y: mousePosition.y - 6,
-        scale: isHoveringInteractive ? 2 : 1,
-        boxShadow: isHoveringInteractive
-          ? "0 0 12px rgba(255, 255, 255, 0.7)"
-          : "none",
-      }}
-      transition={{
-        type: "tween",
-        ease: "easeOut",
-        duration: 0.1,
-      }}
       style={{
         position: "fixed",
         top: 0,
         left: 0,
-        width: 12,
-        height: 12,
+        width: isHoveringInteractive ? 24 : 12,
+        height: isHoveringInteractive ? 24 : 12,
         borderRadius: "50%",
         backgroundColor: "#fff",
         pointerEvents: "none",
         zIndex: 9999,
         mixBlendMode: "difference",
+        transition: "width 0.15s ease, height 0.15s ease, box-shadow 0.15s ease",
+        boxShadow: isHoveringInteractive
+          ? "0 0 12px rgba(255, 255, 255, 0.7)"
+          : "none",
+        transform: "translate3d(0, 0, 0)",
       }}
     />
   );
