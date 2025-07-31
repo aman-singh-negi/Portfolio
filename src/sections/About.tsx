@@ -359,16 +359,3 @@ const About = () => {
 };
 
 export default About;
-
-// Animate the cube with more dynamic effects
-useFrame((state) => {
-  if (meshRef.current && wireframeRef.current) {
-    // Pulse effect for the main cube
-    const material = meshRef.current.material as THREE.MeshStandardMaterial;
-    material.emissiveIntensity = 0.5 + Math.sin(state.clock.elapsedTime) * 0.3;
-    
-    // Rotate wireframe slightly differently for interesting effect
-    wireframeRef.current.rotation.x = meshRef.current.rotation.x + Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
-    wireframeRef.current.rotation.z = meshRef.current.rotation.z + Math.cos(state.clock.elapsedTime * 0.3) * 0.1;
-  }
-});
