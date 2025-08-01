@@ -135,5 +135,4 @@ console.log('Tech Stack:', portfolio.stack.join(', '));`;
     </motion.div>
   );
 };
-
 export default CodePlayground;

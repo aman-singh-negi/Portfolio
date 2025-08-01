@@ -5,7 +5,7 @@ import { getAnalytics, Analytics } from 'firebase/analytics';
 
 // Check if environment variables are properly loaded and log any missing ones
 // This function is called immediately to validate environment setup
-const validateEnvVars = () => {
+function checkEnvVars(): boolean {
   const requiredVars = [
     'VITE_FIREBASE_API_KEY',
     'VITE_FIREBASE_AUTH_DOMAIN',
@@ -29,7 +29,7 @@ const validateEnvVars = () => {
 };
 
 // Execute the validation
-validateEnvVars();
+checkEnvVars();
 
 // Safely access environment variables
 const getEnvVar = (name: string) => {
@@ -53,7 +53,7 @@ const firebaseConfig = {
 };
 
 // Define proper types for Firebase instances
-let app: ReturnType<typeof initializeApp> | undefined;
+let app: ReturnType<typeof getApp> | undefined;
 let db: Firestore | undefined;
 let analytics: Analytics | null = null;
 
@@ -78,5 +78,4 @@ try {
   app = undefined;
   db = undefined;
 }
-
 export { app, db, analytics };
