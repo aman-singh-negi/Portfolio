@@ -188,10 +188,10 @@ body *, body *::before, body *::after {
 :root {
     --background: #f8f2e9;
     --text: #1a1a2e;
-  --accent1: #0066cc;
-  --accent2: #cc0066;
-  --accent1-rgb: 0, 102, 204;
-  --accent2-rgb: 204, 0, 102;
+  --accent1: #3498db;
+  --accent2: #e74c3c;
+  --accent1-rgb: 52, 152, 219;
+  --accent2-rgb: 231, 76, 60;
   --gray-100: #f7fafc;
   --gray-200: #edf2f7;
   --gray-300: #e2e8f0;
@@ -253,8 +253,8 @@ canvas {
 .Cursor span {
   position: absolute;
   display: block;
-  width: clamp(16px, 2vw, 26px);
-  height: clamp(16px, 2vw, 26px);
+  width: clamp(14px, 1.8vw, 22px);
+  height: clamp(14px, 1.8vw, 22px);
   border-radius: 50%;
   background-color: white;
   transform-origin: center center;
@@ -264,15 +264,15 @@ canvas {
 /* Responsive cursor sizes */
 @media (min-width: 768px) and (max-width: 1024px) {
   .Cursor span {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
 }
 
 @media (min-width: 1025px) {
   .Cursor span {
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 22px;
   }
 }
 

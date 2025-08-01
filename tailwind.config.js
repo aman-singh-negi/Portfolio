@@ -14,8 +14,8 @@ module.exports = {
         accent2: '#ff75b5',
         accent3: '#9945FF',
         accent4: '#FFD166', // New gold accent
-        'accent1-light': '#0066cc',
-        'accent2-light': '#cc0066',
+        'accent1-light': '#3498db', // Changed from #0066cc to a more vibrant blue
+        'accent2-light': '#e74c3c', // Changed from #cc0066 to a more vibrant red
         gray: {
           100: 'var(--gray-100)',
           200: 'var(--gray-200)',
