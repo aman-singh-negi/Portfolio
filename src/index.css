@@ -188,9 +188,9 @@ body *, body *::before, body *::after {
 :root {
     --background: #f8f2e9;
     --text: #1a1a2e;
-  --accent1: #3498db;
+  --accent1: #1565C0;
   --accent2: #e74c3c;
-  --accent1-rgb: 52, 152, 219;
+  --accent1-rgb: 21, 101, 192;
   --accent2-rgb: 231, 76, 60;
   --gray-100: #f7fafc;
   --gray-200: #edf2f7;
