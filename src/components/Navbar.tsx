@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback, memo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiMenu, FiX, FiCode } from 'react-icons/fi'; // Removed FiAward
+import { memo, useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { FiCommand, FiMenu, FiX, FiArrowUpRight } from 'react-icons/fi';
 import ThemeToggle from './ThemeToggle';
 
 type NavLink = {
@@ -12,10 +12,7 @@ const navLinks: NavLink[] = [
   { name: 'Home', href: '#home' },
   { name: 'About', href: '#about' },
   { name: 'Projects', href: '#projects' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Education', href: '#education' },
   { name: 'Experience', href: '#experience' },
-  { name: 'Achievements', href: '#achievements' },
   { name: 'Contact', href: '#contact' },
 ];
 
@@ -24,174 +21,181 @@ interface NavbarProps {
   onCertificatesClick?: () => void;
 }
 
-
-const Navbar = ({ onHomeClick }: NavbarProps) => {
+const Navbar = ({ onHomeClick, onCertificatesClick }: NavbarProps) => {
   const [activeSection, setActiveSection] = useState('home');
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [visible, setVisible] = useState(true);
-
-  const handleScroll = useCallback(() => {
-    requestAnimationFrame(() => {
-      setScrolled(window.scrollY > 50);
-
-      const currentScrollPos = window.scrollY;
-      const isVisible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
-
-      setPrevScrollPos(currentScrollPos);
-      setVisible(isVisible);
-
-      const sections = document.querySelectorAll('section[id]');
-      let foundActive = false;
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        const sectionTop = section.getBoundingClientRect().top;
-        const sectionId = section.getAttribute('id');
-
-        if (sectionTop < 100 && sectionTop > -100 && sectionId) {
-          setActiveSection(sectionId);
-          foundActive = true;
-          break;
-        }
-      }
-
-      if (!foundActive && window.scrollY < 100) {
-        setActiveSection('home');
-      }
-    });
-  }, [prevScrollPos]);
 
   useEffect(() => {
-    let ticking = false;
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-    const scrollListener = () => {
-      if (!ticking) {
-        ticking = true;
-        handleScroll();
-        setTimeout(() => (ticking = false), 100);
-      }
-    };
+        if (visibleEntry?.target.id) {
+          setActiveSection(visibleEntry.target.id);
+        }
+      },
+      {
+        rootMargin: '-35% 0px -45% 0px',
+        threshold: [0.1, 0.3, 0.6],
+      },
+    );
 
-    window.addEventListener('scroll', scrollListener, { passive: true });
-    return () => window.removeEventListener('scroll', scrollListener);
-  }, [handleScroll]);
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  const handleNavClick = (href: string) => {
+    setIsOpen(false);
+    if (href === '#home') {
+      onHomeClick?.();
+    }
+  };
+
+  const openCommandPalette = () => {
+    const event = new KeyboardEvent('keydown', {
+      key: 'k',
+      metaKey: true,
+      bubbles: true,
+    });
+    window.dispatchEvent(event);
+  };
 
   return (
-    <header
-      className={`fixed w-full z-40 transition-all duration-300 
-        ${scrolled
-          ? 'py-3 glass-morphism shadow-xl border-b border-gray-200/10 dark:border-gray-800/10'
-          : 'py-5 bg-light/50 dark:bg-dark/50 backdrop-blur-sm'}
-        ${visible ? 'top-0' : '-top-20'}`}
-    >
-      <nav className="container mx-auto px-4 sm:px-6 flex justify-between items-center relative">
-        <motion.a
-          href="#home"
-          className="flex items-center space-x-2 group"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <span className="relative overflow-hidden rounded-full p-2 bg-gradient-to-br from-accent1/20 to-accent2/20 group-hover:from-accent1/30 group-hover:to-accent2/30 transition-all duration-300">
-            <FiCode className="text-gray-700 dark:text-accent1 w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-          </span>
-          <span className="text-2xl font-bold gradient-text">Aman</span>
-        </motion.a>
+    <header className="fixed inset-x-0 top-0 z-40 px-4 pt-6 flex justify-center w-full pointer-events-none">
+      <div className="w-full max-w-4xl pointer-events-auto">
+        <div className="glass-panel mx-auto flex items-center justify-between rounded-[2rem] px-4 py-3 shadow-sm relative border border-border bg-card/60 backdrop-blur-2xl">
+          
+          <a href="#home" onClick={() => handleNavClick('#home')} className="flex items-center gap-3 relative z-10 group cursor-pointer" aria-label="Home">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-foreground text-background text-sm font-extrabold transition-transform duration-300 group-hover:scale-110">
+              AN
+            </div>
+          </a>
 
-        <div className="hidden md:flex items-center space-x-1">
-          {navLinks.map((link, index) => (
-            <motion.a
-              key={link.name}
-              href={link.href}
-              className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 
-                ${activeSection === link.href.substring(1)
-                  ? 'text-white dark:text-white bg-gradient-to-r from-accent1 to-accent2 shadow-md'
-                  : 'text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-accent2 hover:bg-gray-100/50 dark:hover:bg-accent2/5'}`}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                if (link.href === '#home' && onHomeClick) {
-                  onHomeClick();
-                }
-              }}
+          <nav className="hidden items-center gap-1 md:flex relative z-10 bg-muted/40 p-1 rounded-full border border-border/50">
+            {navLinks.map((link) => {
+              const active = activeSection === link.href.slice(1);
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  className={`relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-300 ${
+                    active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {active && (
+                    <motion.div
+                      layoutId="activeNavIndicator"
+                      className="absolute inset-0 rounded-full bg-background shadow-sm border border-border/50"
+                      transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }}
+                    />
+                  )}
+                  <span className="relative z-10">{link.name}</span>
+                </a>
+              );
+            })}
+          </nav>
+
+          <div className="flex items-center gap-3 relative z-10">
+            <button
+              onClick={openCommandPalette}
+              className="hidden items-center gap-2 rounded-full border border-border bg-background/50 px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-all hover:bg-muted md:flex hover:scale-105 active:scale-95"
+              aria-label="Command Palette"
             >
-              {link.name}
-              {activeSection === link.href.substring(1) && (
-                <motion.span
-                  className="absolute bottom-0 left-0 right-0 mx-auto w-1/2 h-0.5 bg-gradient-to-r from-accent1 to-accent2"
-                  layoutId="navbar-indicator"
-                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                />
-              )}
-            </motion.a>
-          ))}
-        </div>
+              <span>Search</span>
+              <kbd className="font-mono text-[10px] uppercase bg-foreground/10 px-1 rounded text-foreground font-bold">⌘K</kbd>
+            </button>
 
-        <div className="flex items-center md:hidden">
-          <motion.button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2 rounded-full bg-gradient-to-br from-accent1/10 to-accent2/10 hover:from-accent1/20 hover:to-accent2/20 transition-all duration-300 focus:outline-none"
-            whileTap={{ scale: 0.9 }}
-            whileHover={{ scale: 1.1 }}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? (
-              <FiX size={24} className="text-gray-700 dark:text-accent2" />
-            ) : (
-              <FiMenu size={24} className="text-gray-700 dark:text-accent1" />
-            )}
-          </motion.button>
+            <div className="h-4 w-px bg-border hidden md:block"></div>
+
+            <button
+              onClick={onCertificatesClick}
+              className="hidden lg:flex items-center justify-center h-9 w-9 rounded-full bg-muted text-muted-foreground transition-all hover:bg-foreground hover:text-background active:scale-95 group"
+              aria-label="Certificates"
+              title="Certificates"
+            >
+              <FiArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </button>
+
+            <ThemeToggle />
+            
+            <button
+              onClick={() => setIsOpen((prev) => !prev)}
+              className="md:hidden flex h-9 w-9 items-center justify-center rounded-full bg-muted text-foreground transition-all active:scale-95 hover:bg-border"
+              aria-label="Toggle menu"
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={isOpen ? 'close' : 'open'}
+                  initial={{ opacity: 0, rotate: -90 }}
+                  animate={{ opacity: 1, rotate: 0 }}
+                  exit={{ opacity: 0, rotate: 90 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  {isOpen ? <FiX size={18} /> : <FiMenu size={18} />}
+                </motion.div>
+              </AnimatePresence>
+            </button>
+          </div>
         </div>
-      </nav>
+      </div>
 
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 z-50 bg-light/95 dark:bg-dark/95 backdrop-blur-md pt-20"
-            initial={{ opacity: 0, clipPath: 'circle(0% at top right)' }}
-            animate={{ opacity: 1, clipPath: 'circle(150% at top right)' }}
-            exit={{ opacity: 0, clipPath: 'circle(0% at top right)' }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-x-4 top-[5.5rem] md:hidden z-30 pointer-events-auto"
+            initial={{ opacity: 0, y: -10, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.96 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="container mx-auto px-6 py-8 flex flex-col space-y-6">
-              {navLinks.map((link, index) => (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  className={`text-2xl font-medium flex items-center space-x-2 p-3 rounded-lg
-                    ${activeSection === link.href.substring(1)
-                    ? 'text-accent1 bg-accent1/10'
-                    : 'text-gray-700 dark:text-gray-300'}`}
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  onClick={() => setIsOpen(false)}
-                  whileHover={{ x: 10, backgroundColor: 'rgba(var(--accent2-rgb), 0.1)' }}
-                >
-                  <span className="relative overflow-hidden">
+            <div className="glass-panel rounded-3xl p-3 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] bg-background border border-border">
+              <div className="flex flex-col gap-1">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => handleNavClick(link.href)}
+                    className={`rounded-2xl px-4 py-3.5 text-sm font-semibold transition-colors ${
+                      activeSection === link.href.slice(1)
+                        ? 'bg-foreground text-background'
+                        : 'bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground'
+                    }`}
+                  >
                     {link.name}
-                    {activeSection === link.href.substring(1) && (
-                      <motion.span
-                        className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-accent1 to-accent2"
-                        layoutId="mobile-navbar-indicator"
-                      />
-                    )}
-                  </span>
-                </motion.a>
-              ))}
+                  </a>
+                ))}
+                
+                <div className="h-px bg-border my-2 mx-3" />
+                
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    onCertificatesClick?.();
+                  }}
+                  className="rounded-2xl px-4 py-3.5 text-left text-sm font-semibold text-muted-foreground hover:bg-muted hover:text-foreground flex items-center justify-between"
+                >
+                  View Certificates
+                  <FiArrowUpRight />
+                </button>
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    openCommandPalette();
+                  }}
+                  className="rounded-2xl px-4 py-3.5 text-left text-sm font-semibold text-muted-foreground hover:bg-muted hover:text-foreground flex items-center justify-between"
+                >
+                  Command Palette
+                  <FiCommand />
+                </button>
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <div className="absolute right-16 sm:right-20 md:right-0 top-1/2 transform -translate-y-1/2">
-        <ThemeToggle />
-      </div>
     </header>
   );
 };

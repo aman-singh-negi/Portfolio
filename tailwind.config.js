@@ -7,58 +7,49 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Inter', 'system-ui', 'sans-serif'],
+      },
       colors: {
-        dark: '#0f0f0f',
-        light: '#f8f2e9', // Soft skin tone color
-        accent1: '#00ffe7',
-        accent2: '#ff75b5',
-        accent3: '#9945FF',
-        accent4: '#FFD166', // New gold accent
-        'accent1-light': '#1565C0', // Changed to a deeper blue that looks better on light backgrounds
-        'accent2-light': '#e74c3c', // Changed from #cc0066 to a more vibrant red
-        gray: {
-          100: 'var(--gray-100)',
-          200: 'var(--gray-200)',
-          300: 'var(--gray-300)',
-          400: 'var(--gray-400)',
-          500: 'var(--gray-500)',
-          600: 'var(--gray-600)',
-          700: 'var(--gray-700)',
-          800: 'var(--gray-800)',
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        muted: 'var(--muted)',
+        'muted-foreground': 'var(--muted-foreground)',
+        border: 'var(--border)',
+        'border-strong': 'var(--border-strong)',
+        accent: {
+          DEFAULT: 'var(--accent)',
+          hover: 'var(--accent-hover)',
+        },
+        card: {
+          DEFAULT: 'var(--card)',
+          hover: 'var(--card-hover)',
         },
       },
       animation: {
-        'blob': 'blob 7s infinite',
-        'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
-      },
-      transitionDelay: {
-        '1500': '1500ms',
-        '2000': '2000ms',
-        '3000': '3000ms',
-        '4000': '4000ms',
-      },
-      // Animation delay utility classes
-      extend: {
-        animation: {
-          'delay-2000': 'animation-delay-2000',
-          'delay-4000': 'animation-delay-4000',
-        },
+        'fade-in': 'fadeIn 0.5s ease-out forwards',
+        'slide-up': 'slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'scale-in': 'scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'float': 'float 6s ease-in-out infinite',
       },
       keyframes: {
-        blob: {
-          '0%': {
-            transform: 'translate(0px, 0px) scale(1)',
-          },
-          '33%': {
-            transform: 'translate(30px, -50px) scale(1.1)',
-          },
-          '66%': {
-            transform: 'translate(-20px, 20px) scale(0.9)',
-          },
-          '100%': {
-            transform: 'translate(0px, 0px) scale(1)',
-          },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        scaleIn: {
+          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        }
       },
     },
   },

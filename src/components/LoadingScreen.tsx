@@ -1,52 +1,43 @@
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import '../styles/LoaderStyles.css'; // ✅ Correct path
+import { useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 interface LoadingScreenProps {
   onLoadingComplete: () => void;
 }
 
 const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
-  const [isVisible, setIsVisible] = useState(true);
-  const totalAnimations = 1; // Run the welcome animation only once
-
   useEffect(() => {
-    // Set a single timer for the animation duration
-    // We only need to wait for one animation cycle to complete
-    const totalDuration = 3500 * totalAnimations; // 3.5 seconds per animation cycle
-    
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-      onLoadingComplete();
-    }, totalDuration);
-    
-    return () => clearTimeout(timer);
+    const timer = window.setTimeout(onLoadingComplete, 1400);
+    return () => window.clearTimeout(timer);
   }, [onLoadingComplete]);
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 0.9, y: -20 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="loader-wrapper">
-            <span className="loader-letter">W</span>
-            <span className="loader-letter">e</span>
-            <span className="loader-letter">l</span>
-            <span className="loader-letter">c</span>
-            <span className="loader-letter">o</span>
-            <span className="loader-letter">m</span>
-            <span className="loader-letter">e</span>
-
-            <div className="loader"></div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[color:var(--bg)]"
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+    >
+      <div className="premium-panel noise-overlay relative flex w-[min(92vw,28rem)] flex-col gap-5 rounded-[2rem] px-8 py-10 text-center">
+        <div className="section-kicker mx-auto">Portfolio System</div>
+        <div>
+          <p className="font-['Space_Grotesk'] text-4xl font-bold tracking-[-0.08em] text-[color:var(--heading)]">
+            Aman Singh Negi
+          </p>
+          <p className="mt-3 text-sm uppercase tracking-[0.28em] text-[color:var(--text-muted)]">
+            Editorial Futurism
+          </p>
+        </div>
+        <div className="h-1.5 overflow-hidden rounded-full bg-black/5 dark:bg-white/10">
+          <motion.div
+            className="h-full rounded-full bg-[linear-gradient(135deg,var(--accent),var(--accent-2),var(--accent-3))]"
+            initial={{ width: '0%' }}
+            animate={{ width: '100%' }}
+            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          />
+        </div>
+      </div>
+    </motion.div>
   );
 };
 

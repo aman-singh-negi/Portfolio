@@ -1,56 +1,71 @@
-import React, { useRef, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Edges } from "@react-three/drei";
-import * as THREE from "three";
+import { useMemo, useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Float } from '@react-three/drei';
+import * as THREE from 'three';
 
-const FloatingObject = () => {
-  const meshRef = useRef<THREE.Mesh>(null!);
-  let t = 0;
-  
-  // Use useMemo to optimize geometry and material creation
-  const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), []);
-  const material = useMemo(() => new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 }), []);
+const CoreObject = () => {
+  const groupRef = useRef<THREE.Group>(null);
+  const shellRef = useRef<THREE.Mesh>(null);
 
-  useFrame((_, delta) => {
-    // Use a smaller delta multiplier for smoother animation
-    t += delta * 0.8;
-    if (meshRef.current) {
-      // Reduce rotation speed for smoother animation
-      meshRef.current.rotation.x += 0.005;
-      meshRef.current.rotation.y += 0.005;
-      meshRef.current.position.y = Math.sin(t) * 0.15;
+  useFrame((state) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = state.clock.elapsedTime * 0.3;
+      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.35) * 0.12;
+    }
+
+    if (shellRef.current) {
+      shellRef.current.rotation.z = state.clock.elapsedTime * 0.2;
     }
   });
 
+  const lineMaterial = useMemo(
+    () =>
+      new THREE.MeshBasicMaterial({
+        color: '#7aa9ff',
+        wireframe: true,
+        transparent: true,
+        opacity: 0.42,
+      }),
+    [],
+  );
+
   return (
-    <mesh ref={meshRef} scale={[2, 2, 2]} geometry={geometry} material={material}>
-      <Edges
-        scale={1.05}
-        threshold={15}
-        color="#00ffff" // Neon cyan
-        linewidth={2} // Reduced line width for better performance
-      />
-    </mesh>
+    <Float speed={1.4} rotationIntensity={0.4} floatIntensity={0.9}>
+      <group ref={groupRef}>
+        <mesh>
+          <icosahedronGeometry args={[1.25, 1]} />
+          <meshPhysicalMaterial
+            color="#1d4dff"
+            roughness={0.08}
+            transmission={0.95}
+            thickness={1.2}
+            metalness={0.12}
+            clearcoat={1}
+            clearcoatRoughness={0.18}
+          />
+        </mesh>
+        <mesh ref={shellRef} material={lineMaterial} scale={1.35}>
+          <icosahedronGeometry args={[1.25, 1]} />
+        </mesh>
+        <mesh position={[0, 0, -0.2]} scale={0.38}>
+          <octahedronGeometry args={[1, 0]} />
+          <meshStandardMaterial color="#5af0de" emissive="#5af0de" emissiveIntensity={0.8} />
+        </mesh>
+      </group>
+    </Float>
   );
 };
 
-const HeroObject3D: React.FC = () => {
+const HeroObject3D = () => {
   return (
-    <div style={{ 
-      width: "100%", 
-      height: "100vh", 
-      background: "transparent",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      zIndex: 10, // Ensure it's above background and visible over other sections
-      pointerEvents: "none" // Allow clicking through to elements behind
-    }}>
-      <Canvas camera={{ position: [0, 0, 6], fov: 50 }} gl={{ alpha: true }}>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} />
-        <FloatingObject />
-        <OrbitControls enableZoom={false} enablePan={false} autoRotate />
+    <div className="h-full w-full">
+      <Canvas dpr={[1, 1.6]} camera={{ position: [0, 0, 4.8], fov: 42 }}>
+        <color attach="background" args={['#000000']} />
+        <fog attach="fog" args={['#050913', 5, 8]} />
+        <ambientLight intensity={0.9} />
+        <directionalLight position={[5, 4, 3]} intensity={1.1} color="#8db7ff" />
+        <pointLight position={[-3, -2, 2]} intensity={1.3} color="#ff8c8c" />
+        <CoreObject />
       </Canvas>
     </div>
   );
