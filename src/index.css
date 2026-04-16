@@ -80,6 +80,31 @@
 }
 
 @layer components {
+  /* Layout Classes for Massive Breathing Room */
+  .section-shell {
+    @apply relative py-32 md:py-40 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto;
+  }
+  
+  .section-kicker {
+    @apply kicker mb-6 md:mb-8;
+  }
+
+  .section-title {
+    @apply text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-foreground mb-6 leading-[1.1];
+  }
+
+  .section-copy {
+    @apply text-lg md:text-xl text-muted-foreground font-medium leading-relaxed max-w-3xl;
+  }
+
+  .editorial-card {
+    @apply relative border border-border/50 bg-card hover:bg-card-hover backdrop-blur-3xl shadow-[0_8px_32px_-12px_rgba(0,0,0,0.1)] transition-all duration-500 ease-out;
+  }
+
+  .premium-panel {
+    @apply relative border border-border/80 bg-background shadow-2xl;
+  }
+
   /* Ultra-Premium glass effect */
   .glass-panel {
     background: var(--card);
@@ -97,7 +122,7 @@
 
   /* Magnetic / Glow buttons */
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300 overflow-hidden;
+    @apply relative inline-flex items-center justify-center gap-2 px-6 py-3 md:px-8 md:py-4 rounded-full font-bold transition-all duration-300 overflow-hidden text-sm md:text-base;
     background: var(--foreground);
     color: var(--background);
     will-change: transform;
@@ -129,7 +154,7 @@
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold transition-all duration-300;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 md:px-8 md:py-4 rounded-full font-bold transition-all duration-300 text-sm md:text-base;
     background: transparent;
     color: var(--foreground);
     border: 1px solid var(--border);
@@ -147,7 +172,7 @@
 
   /* Kicker / Eyebrow */
   .kicker {
-    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-black tracking-widest uppercase;
+    @apply inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-black tracking-[0.2em] uppercase;
     background: var(--muted);
     color: var(--muted-foreground);
     border: 1px solid var(--border);
@@ -170,7 +195,7 @@
 
   /* Projects Bento Cards */
   .bento-card {
-    @apply relative overflow-hidden rounded-[2rem] p-6 sm:p-8 border border-border;
+    @apply relative overflow-hidden rounded-[2.5rem] p-8 sm:p-10 border border-border;
     background: var(--card);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
     will-change: transform;
@@ -178,7 +203,7 @@
   
   .bento-card:hover {
     background: var(--card-hover);
-    transform: translateY(-4px);
+    transform: translateY(-6px);
   }
 }
 

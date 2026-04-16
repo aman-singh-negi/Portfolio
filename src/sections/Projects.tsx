@@ -1,6 +1,7 @@
 import React from 'react';
-import { motion, useReducedMotion, useMotionValue, useMotionTemplate } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { FiArrowUpRight, FiGithub, FiExternalLink } from 'react-icons/fi';
+import SpotlightCard from '../components/SpotlightCard';
 import project1Image from '../assets/Project1.jpeg';
 import project2Image from '../assets/Project2.webp';
 import project3Image from '../assets/Project3.jpeg';
@@ -87,38 +88,6 @@ const itemVariants = {
     y: 0,
     transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
   },
-};
-
-const SpotlightCard = ({ children, className }: { children: React.ReactNode, className: string }) => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
-
-  return (
-    <div
-      className={`group relative ${className}`}
-      onMouseMove={handleMouseMove}
-    >
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-300 group-hover:opacity-100 z-10 hidden md:block"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              600px circle at ${mouseX}px ${mouseY}px,
-              rgba(139, 92, 246, 0.15),
-              transparent 80%
-            )
-          `,
-        }}
-      />
-      {children}
-    </div>
-  );
 };
 
 const Projects = () => {

@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { FiAward, FiMapPin } from 'react-icons/fi';
+import SpotlightCard from '../components/SpotlightCard';
 
 type EducationItem = {
   institution: string;
@@ -54,7 +55,7 @@ const Education = () => {
 
   return (
     <section id="education" className="section-shell">
-      <div className="mb-12 space-y-5">
+      <div className="mb-16 space-y-6">
         <div className="section-kicker">Education</div>
         <h2 className="section-title">Academic foundation with strong upward momentum.</h2>
         <p className="section-copy">
@@ -63,7 +64,7 @@ const Education = () => {
         </p>
       </div>
 
-      <div className="relative grid gap-5 before:absolute before:bottom-0 before:left-[1.05rem] before:top-0 before:hidden before:w-px before:bg-[color:var(--border)] md:before:block">
+      <div className="relative grid gap-8 before:absolute before:bottom-0 before:left-[1.05rem] before:top-0 before:hidden before:w-px before:bg-[color:var(--border)] md:before:block">
         {educationData.map((item, index) => (
           <motion.article
             key={`${item.institution}-${item.period}`}
@@ -71,38 +72,39 @@ const Education = () => {
             whileInView={reduceMotion ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.45, delay: index * 0.06 }}
-            className="relative pl-0 md:pl-12"
+            className="relative pl-0 md:pl-16"
           >
-            <div className="absolute left-0 top-7 hidden h-9 w-9 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--bg-elevated)] text-[color:var(--heading)] md:flex">
-              <FiAward />
+            <div className="absolute left-0 top-10 hidden h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-neon-cyan shadow-[0_0_12px_theme('colors.neon.cyan')] md:flex">
+              <FiAward size={20} />
             </div>
-            <div className="editorial-card rounded-[1.85rem] p-7">
-              <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+            
+            <SpotlightCard className="editorial-card rounded-[2.5rem] p-8 md:p-12 cursor-hover">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.24em] text-[color:var(--text-muted)]">{item.period}</p>
-                  <h3 className="mt-3 font-['Space_Grotesk'] text-3xl font-bold tracking-[-0.05em] text-[color:var(--heading)]">
+                  <p className="text-sm font-bold uppercase tracking-[0.24em] text-neon-cyan">{item.period}</p>
+                  <h3 className="mt-4 font-sans text-3xl md:text-4xl font-bold tracking-[-0.03em] text-foreground leading-snug">
                     {item.degree}
                   </h3>
-                  <p className="mt-2 text-base font-semibold text-[color:var(--heading)]">{item.institution}</p>
+                  <p className="mt-3 text-lg font-semibold text-muted-foreground">{item.institution}</p>
                 </div>
-                <div className="rounded-full border border-[color:var(--border)] bg-[color:var(--bg-soft)] px-4 py-2 text-sm font-semibold text-[color:var(--heading)]">
+                <div className="rounded-full border border-neon-violet/30 bg-muted/50 px-5 py-2.5 text-sm font-bold text-neon-violet shadow-[0_0_15px_rgba(139,92,246,0.15)] whitespace-nowrap">
                   {item.score}
                 </div>
               </div>
 
-              <div className="mt-4 flex items-center gap-2 text-sm text-[color:var(--text-muted)]">
-                <FiMapPin />
+              <div className="mt-6 flex items-center gap-3 text-base text-muted-foreground font-medium">
+                <FiMapPin className="text-neon-cyan" />
                 <span>{item.location}</span>
               </div>
 
-              <div className="mt-6 grid gap-3">
+              <div className="mt-8 grid gap-4">
                 {item.highlights.map((highlight) => (
-                  <div key={highlight} className="rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--bg-soft)] px-4 py-3 text-sm leading-7 text-[color:var(--text-muted)]">
+                  <div key={highlight} className="rounded-[1.2rem] border border-border bg-muted/20 px-5 py-4 text-base leading-relaxed text-muted-foreground hover:bg-muted/40 transition-colors">
                     {highlight}
                   </div>
                 ))}
               </div>
-            </div>
+            </SpotlightCard>
           </motion.article>
         ))}
       </div>

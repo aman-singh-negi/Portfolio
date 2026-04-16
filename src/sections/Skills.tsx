@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
+import SpotlightCard from '../components/SpotlightCard';
 
 type SkillCategory = {
   title: string;
@@ -34,8 +35,8 @@ const Skills = () => {
 
   return (
     <section id="skills" className="section-shell">
-      <div className="mb-12 grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-        <div className="space-y-5">
+      <div className="mb-16 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+        <div className="space-y-6">
           <div className="section-kicker">Capabilities</div>
           <h2 className="section-title">A cleaner view of where I create the most value.</h2>
         </div>
@@ -45,7 +46,7 @@ const Skills = () => {
         </p>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         {skillCategories.map((category, index) => (
           <motion.article
             key={category.title}
@@ -53,22 +54,23 @@ const Skills = () => {
             whileInView={reduceMotion ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.5, delay: index * 0.06 }}
-            className="editorial-card rounded-[1.9rem] p-7"
           >
-            <p className="text-sm font-bold uppercase tracking-[0.24em] text-[color:var(--text-muted)]">{category.title}</p>
-            <p className="mt-4 font-['Space_Grotesk'] text-2xl font-bold tracking-[-0.04em] text-[color:var(--heading)]">
-              {category.summary}
-            </p>
-            <div className="mt-7 flex flex-wrap gap-2.5">
-              {category.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full border border-[color:var(--border)] bg-[color:var(--bg-soft)] px-3 py-1.5 text-sm font-semibold text-[color:var(--heading)]"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
+            <SpotlightCard className="editorial-card h-full rounded-[2.5rem] p-8 md:p-10 cursor-hover">
+              <p className="text-sm font-bold uppercase tracking-[0.24em] text-muted-foreground">{category.title}</p>
+              <p className="mt-5 font-sans text-2xl md:text-3xl font-bold tracking-[-0.03em] text-foreground leading-snug">
+                {category.summary}
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {category.skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="rounded-full border border-border bg-muted/40 px-4 py-2 text-sm font-bold text-foreground hover:-translate-y-1 hover:bg-neon-violet hover:text-white hover:border-transparent transition-all shadow-sm"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </SpotlightCard>
           </motion.article>
         ))}
       </div>

@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { FiArrowRight, FiAward, FiCode, FiTrendingUp } from 'react-icons/fi';
+import SpotlightCard from '../components/SpotlightCard';
 
 type Achievement = {
   title: string;
@@ -34,21 +35,21 @@ const Achievements = ({ onViewCertificates }: AchievementsProps) => {
 
   return (
     <section id="achievements" className="section-shell">
-      <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-        <div className="space-y-5">
+      <div className="mb-16 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <div className="space-y-6">
           <div className="section-kicker">Recognition</div>
           <h2 className="section-title">Achievements that reinforce both depth and consistency.</h2>
           <p className="section-copy">
             These milestones show how I perform in competitive environments and how that strength carries into product work.
           </p>
         </div>
-        <button onClick={onViewCertificates} className="cta-primary self-start lg:self-auto">
+        <button onClick={onViewCertificates} className="btn-primary self-start lg:self-auto cursor-hover whitespace-nowrap">
           View Certificates
-          <FiArrowRight />
+          <FiArrowRight size={18} />
         </button>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-3">
         {achievements.map((achievement, index) => {
           const Icon = achievement.icon;
           return (
@@ -58,15 +59,16 @@ const Achievements = ({ onViewCertificates }: AchievementsProps) => {
               whileInView={reduceMotion ? {} : { opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45, delay: index * 0.06 }}
-              className="editorial-card rounded-[1.8rem] p-6"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,rgba(var(--accent-rgb),0.18),rgba(var(--accent-2-rgb),0.18))] text-[color:var(--heading)]">
-                <Icon size={22} />
-              </div>
-              <h3 className="mt-6 font-['Space_Grotesk'] text-2xl font-bold tracking-[-0.04em] text-[color:var(--heading)]">
-                {achievement.title}
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-[color:var(--text-muted)]">{achievement.description}</p>
+              <SpotlightCard className="editorial-card h-full rounded-[2.5rem] p-8 md:p-10 cursor-hover">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-muted text-foreground border border-border shadow-sm group-hover:bg-neon-cyan group-hover:text-background transition-all duration-300">
+                  <Icon size={24} />
+                </div>
+                <h3 className="mt-8 font-sans text-2xl md:text-3xl font-bold tracking-[-0.03em] text-foreground group-hover:text-neon-cyan transition-colors">
+                  {achievement.title}
+                </h3>
+                <p className="mt-4 text-base leading-relaxed text-muted-foreground">{achievement.description}</p>
+              </SpotlightCard>
             </motion.article>
           );
         })}
