@@ -1,71 +1,103 @@
-import { useMemo, useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
+import { useRef, useContext } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { MeshTransmissionMaterial, Float, Environment, Sparkles, Lightformer } from '@react-three/drei';
 import * as THREE from 'three';
+import { ThemeContext } from '../context/ThemeContext';
 
-const CoreObject = () => {
-  const groupRef = useRef<THREE.Group>(null);
-  const shellRef = useRef<THREE.Mesh>(null);
+const LiquidTorus = () => {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const { theme } = useContext(ThemeContext);
+  const { pointer, viewport } = useThree();
 
-  useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.elapsedTime * 0.3;
-      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.35) * 0.12;
-    }
+  useFrame((_state, delta) => {
+    if (meshRef.current) {
+      // Base rotation
+      meshRef.current.rotation.x += delta * 0.15;
+      meshRef.current.rotation.y += delta * 0.2;
 
-    if (shellRef.current) {
-      shellRef.current.rotation.z = state.clock.elapsedTime * 0.2;
+      // Mouse tracking interpolation
+      const targetX = (pointer.x * viewport.width) / 8;
+      const targetY = (pointer.y * viewport.height) / 8;
+      
+      meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, 0.05);
+      meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, targetY, 0.05);
+      
+      // Slight scale pop on interaction
+      const targetScale = 1 + (Math.abs(pointer.x) + Math.abs(pointer.y)) * 0.1;
+      meshRef.current.scale.setScalar(THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.05));
     }
   });
 
-  const lineMaterial = useMemo(
-    () =>
-      new THREE.MeshBasicMaterial({
-        color: '#7aa9ff',
-        wireframe: true,
-        transparent: true,
-        opacity: 0.42,
-      }),
-    [],
-  );
+  const isDark = theme === 'dark';
 
   return (
-    <Float speed={1.4} rotationIntensity={0.4} floatIntensity={0.9}>
-      <group ref={groupRef}>
-        <mesh>
-          <icosahedronGeometry args={[1.25, 1]} />
-          <meshPhysicalMaterial
-            color="#1d4dff"
-            roughness={0.08}
-            transmission={0.95}
-            thickness={1.2}
-            metalness={0.12}
-            clearcoat={1}
-            clearcoatRoughness={0.18}
-          />
-        </mesh>
-        <mesh ref={shellRef} material={lineMaterial} scale={1.35}>
-          <icosahedronGeometry args={[1.25, 1]} />
-        </mesh>
-        <mesh position={[0, 0, -0.2]} scale={0.38}>
-          <octahedronGeometry args={[1, 0]} />
-          <meshStandardMaterial color="#5af0de" emissive="#5af0de" emissiveIntensity={0.8} />
-        </mesh>
-      </group>
+    <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
+      <mesh ref={meshRef}>
+        {/* Torus Knot Geometry for liquid complex shapes */}
+        <torusKnotGeometry args={[1.5, 0.5, 256, 64]} />
+        <MeshTransmissionMaterial
+          backside
+          samples={4}
+          thickness={1.5}
+          chromaticAberration={1.2}
+          anisotropy={0.3}
+          distortion={0.5}
+          distortionScale={0.5}
+          temporalDistortion={0.1}
+          iridescence={1}
+          iridescenceIOR={1}
+          iridescenceThicknessRange={[0, 1400]}
+          clearcoat={1}
+          attenuationDistance={isDark ? 0.5 : 1}
+          attenuationColor={isDark ? '#8b5cf6' : '#ffffff'}
+          color={isDark ? '#1a1a1a' : '#fafafa'}
+          transmission={1}
+          opacity={1}
+        />
+      </mesh>
     </Float>
+  );
+};
+
+const LightingSetup = () => {
+  const { theme } = useContext(ThemeContext);
+  const isDark = theme === 'dark';
+
+  return (
+    <>
+      <ambientLight intensity={isDark ? 0.2 : 0.8} />
+      <directionalLight position={[10, 10, 5]} intensity={isDark ? 1 : 2} color={isDark ? '#8b5cf6' : '#ffffff'} />
+      <pointLight position={[-10, -10, -5]} intensity={isDark ? 2 : 0.5} color={isDark ? '#06b6d4' : '#aaaaaa'} />
+      <Environment resolution={256}>
+        <group rotation={[-Math.PI / 4, -0.3, 0]}>
+          <Lightformer intensity={isDark ? 5 : 2} rotation-x={Math.PI / 2} position={[0, 5, -9]} scale={[10, 10, 1]} color={isDark ? '#8b5cf6' : '#ffffff'} />
+          <Lightformer intensity={isDark ? 2 : 1} rotation-y={Math.PI / 2} position={[-5, 1, -1]} scale={[20, 0.1, 1]} color={isDark ? '#06b6d4' : '#ffffff'} />
+          <Lightformer intensity={isDark ? 2 : 1} rotation-y={Math.PI / 2} position={[-5, -1, -1]} scale={[20, 0.5, 1]} color={isDark ? '#d946ef' : '#ffffff'} />
+          <Lightformer intensity={isDark ? 2 : 1} rotation-y={-Math.PI / 2} position={[10, 1, 0]} scale={[20, 1, 1]} color={isDark ? '#8b5cf6' : '#ffffff'} />
+        </group>
+      </Environment>
+    </>
   );
 };
 
 const HeroObject3D = () => {
   return (
-    <div className="h-full w-full">
-      <Canvas dpr={[1, 1.6]} camera={{ position: [0, 0, 4.8], fov: 42 }}>
-        <color attach="background" args={['#000000']} />
-        <fog attach="fog" args={['#050913', 5, 8]} />
-        <ambientLight intensity={0.9} />
-        <directionalLight position={[5, 4, 3]} intensity={1.1} color="#8db7ff" />
-        <pointLight position={[-3, -2, 2]} intensity={1.3} color="#ff8c8c" />
-        <CoreObject />
+    <div className="h-full w-full pointer-events-none md:pointer-events-auto">
+      <Canvas
+        dpr={[1, 2]}
+        camera={{ position: [0, 0, 8], fov: 45 }}
+        gl={{ antialias: true, alpha: true }}
+      >
+        <LightingSetup />
+        <LiquidTorus />
+        <Sparkles 
+          count={150} 
+          scale={12} 
+          size={2} 
+          speed={0.4} 
+          opacity={0.3} 
+          color="#06b6d4" 
+        />
       </Canvas>
     </div>
   );

@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import LoadingScreen from './components/LoadingScreen';
 import CommandPalette from './components/CommandPalette';
 import ParticlesBackground from './components/ParticlesBackground';
+import CustomCursor from './components/CustomCursor';
 import Hero from './sections/Hero';
 import About from './sections/About';
 import Projects from './sections/Projects';
@@ -23,6 +24,7 @@ function App() {
   return (
     <ThemeProvider>
       <div className="page-shell page-grid min-h-screen overflow-x-hidden text-[color:var(--text)] relative">
+        <CustomCursor />
         <Analytics />
         <CommandPalette />
         <ParticlesBackground />

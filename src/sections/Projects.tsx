@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import React from 'react';
+import { motion, useReducedMotion, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { FiArrowUpRight, FiGithub, FiExternalLink } from 'react-icons/fi';
 import project1Image from '../assets/Project1.jpeg';
 import project2Image from '../assets/Project2.webp';
@@ -88,6 +89,38 @@ const itemVariants = {
   },
 };
 
+const SpotlightCard = ({ children, className }: { children: React.ReactNode, className: string }) => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <div
+      className={`group relative ${className}`}
+      onMouseMove={handleMouseMove}
+    >
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-300 group-hover:opacity-100 z-10 hidden md:block"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              600px circle at ${mouseX}px ${mouseY}px,
+              rgba(139, 92, 246, 0.15),
+              transparent 80%
+            )
+          `,
+        }}
+      />
+      {children}
+    </div>
+  );
+};
+
 const Projects = () => {
   const reduceMotion = useReducedMotion();
 
@@ -103,7 +136,7 @@ const Projects = () => {
             A curated look at my best efforts in combining software engineering, AI workflows, and practical user experience thinking.
           </p>
         </div>
-        <a href="https://github.com/aman-singh-negi" target="_blank" rel="noopener noreferrer" className="btn-secondary group whitespace-nowrap">
+        <a href="https://github.com/aman-singh-negi" target="_blank" rel="noopener noreferrer" className="btn-secondary group whitespace-nowrap cursor-hover">
           View GitHub
           <FiArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </a>
@@ -120,56 +153,57 @@ const Projects = () => {
           <motion.div
             key={project.title}
             variants={reduceMotion ? {} : itemVariants}
-            className={`bento-card group flex flex-col ${project.colSpan || ''}`}
+            className={`flex flex-col ${project.colSpan || ''}`}
           >
-            {/* Image Section */}
-            <div className="relative h-48 md:h-64 mb-6 rounded-xl overflow-hidden shadow-sm bg-muted transform-gpu">
-              <img
-                src={project.imageUrl}
-                alt={project.title}
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
-              
-              <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                <div className="glass-panel text-white/90 px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wide border border-white/20 shadow-md">
-                  {project.outcome}
+            <SpotlightCard className="bento-card h-full flex flex-col">
+              {/* Image Section */}
+              <div className="relative h-48 md:h-64 mb-6 rounded-xl overflow-hidden shadow-sm bg-muted transform-gpu">
+                <img
+                  src={project.imageUrl}
+                  alt={project.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 will-change-transform"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
+                
+                <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end relative z-20">
+                  <div className="glass-panel text-foreground px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wide shadow-md bg-background/50">
+                    {project.outcome}
+                  </div>
+                  <div className="flex gap-2">
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="cursor-hover p-2 rounded-full bg-background/50 backdrop-blur-md border border-border text-foreground hover:bg-neon-violet hover:text-white hover:border-transparent transition-all shadow-md" aria-label="View Source">
+                      <FiGithub size={16} />
+                    </a>
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="cursor-hover p-2 rounded-full bg-background/50 backdrop-blur-md border border-border text-foreground hover:bg-neon-cyan hover:text-white hover:border-transparent transition-all shadow-md" aria-label="View App">
+                      <FiExternalLink size={16} />
+                    </a>
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all hover:scale-105 shadow-md" aria-label="View Source">
-                    <FiGithub size={16} />
-                  </a>
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all hover:scale-105 shadow-md" aria-label="View App">
-                    <FiExternalLink size={16} />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Content Section */}
-            <div className="flex flex-col flex-1 justify-between gap-4">
-              <div>
-                <h3 className="text-2xl font-bold tracking-tight text-foreground mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-foreground group-hover:to-muted-foreground transition-all duration-300">
-                  {project.title}
-                </h3>
-                <p className="text-sm text-muted-foreground font-medium leading-relaxed">
-                  {project.description}
-                </p>
               </div>
 
-              <div className="flex flex-wrap gap-2 mt-auto pt-4">
-                {project.technologies.slice(0, 4).map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded border border-border/50 text-foreground"
-                  >
-                    {tech}
-                  </span>
-                ))}
+              {/* Content Section */}
+              <div className="flex flex-col flex-1 justify-between gap-4 relative z-20">
+                <div>
+                  <h3 className="text-2xl font-bold tracking-tight text-foreground mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-neon-violet group-hover:to-neon-cyan transition-all duration-300">
+                    {project.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground font-medium leading-relaxed">
+                    {project.description}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mt-auto pt-4">
+                  {project.technologies.slice(0, 4).map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded border border-border/50 text-foreground bg-muted/30"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-            
+            </SpotlightCard>
           </motion.div>
         ))}
       </motion.div>
