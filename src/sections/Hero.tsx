@@ -6,15 +6,15 @@ import { SiLeetcode } from 'react-icons/si';
 const HeroObject3D = lazy(() => import('../components/HeroObject3D'));
 
 const trustStats = [
-  { value: '300+', label: 'LeetCode problems solved' },
-  { value: '9.38', label: 'Current CGPA' },
-  { value: '3x', label: 'Core tracks: AI, Full Stack, CP' },
+  { value: '9.38', label: 'Current CGPA', detail: 'Academic consistency backed by execution.' },
+  { value: '300+', label: 'LeetCode solves', detail: 'Deliberate algorithmic practice across core patterns.' },
+  { value: '3', label: 'Core tracks', detail: 'AI, full-stack engineering, and competitive programming.' },
 ];
 
 const signalRows = [
-  'AI-driven systems with practical deployment experience',
-  'High ownership mindset across product, UI, and engineering',
-  'Built for clarity without sacrificing visual ambition',
+  'Shipping interfaces that feel high-end without losing clarity.',
+  'Comfortable turning AI ideas into practical product workflows.',
+  'Strong ownership from system design through UI finish.',
 ];
 
 const containerVariants = {
@@ -26,11 +26,11 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 28 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
@@ -38,44 +38,28 @@ const Hero = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center px-4 pt-24 pb-14 sm:px-6 lg:px-8">
-      {/* Heavy blobs removed to fix animation lag. Particles and subtle gradients take over. */}
-
-      <div className="mx-auto w-full max-w-7xl grid items-center gap-16 lg:grid-cols-[1.2fr_0.8fr] relative z-10">
-        
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative max-w-2xl"
-        >
+    <section id="home" className="relative flex min-h-screen items-center px-4 pb-16 pt-28 sm:px-6 lg:px-8">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-16 lg:grid-cols-[1.08fr_0.92fr]">
+        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="relative max-w-3xl">
+          <motion.p variants={itemVariants} className="display-eyebrow mb-5">
+            Portfolio engineered as a statement piece
+          </motion.p>
           <motion.div variants={itemVariants} className="mb-6">
-            <span className="kicker">
-              Recruiter-First Portfolio
-            </span>
+            <span className="kicker">Designerly engineering. Product-grade storytelling.</span>
           </motion.div>
 
-          <motion.div variants={itemVariants}>
-            <p className="mb-4 text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground flex gap-2 items-center">
-              <span>Full Stack</span>
-              <span className="w-1 h-1 rounded-full bg-border-strong"></span>
-              <span>AI</span>
-              <span className="w-1 h-1 rounded-full bg-border-strong"></span>
-              <span>CP</span>
-            </p>
-            <h1 className="text-5xl sm:text-6xl lg:text-[5rem] font-extrabold tracking-tighter text-foreground leading-[1.05]">
-              Designing <span className="text-gradient">signal-rich</span> digital experiences.
-            </h1>
-          </motion.div>
+          <motion.h1 variants={itemVariants} className="max-w-3xl text-5xl font-bold leading-[0.98] tracking-[-0.07em] text-foreground sm:text-6xl lg:text-[6.25rem]">
+            Building software that feels <span className="text-gradient">as sharp as it performs.</span>
+          </motion.h1>
 
-          <motion.p variants={itemVariants} className="mt-6 text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-xl font-medium">
-            I’m Aman Singh Negi, a developer focused on building ambitious products with crisp execution, strong algorithms, and ultra-premium interfaces.
+          <motion.p variants={itemVariants} className="mt-7 max-w-2xl text-lg font-medium leading-relaxed text-muted-foreground sm:text-xl">
+            I&apos;m Aman Singh Negi, a developer focused on ambitious digital products where algorithmic strength, applied AI, and visual precision all need to coexist.
           </motion.p>
 
-          <motion.div variants={itemVariants} className="mt-10 flex flex-wrap gap-4 items-center">
+          <motion.div variants={itemVariants} className="mt-10 flex flex-wrap items-center gap-4">
             <a href="#projects" className="btn-primary group">
               Explore Projects
-              <FiArrowDownRight size={18} className="transition-transform group-hover:translate-y-0.5 group-hover:translate-x-0.5" />
+              <FiArrowDownRight size={18} className="transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
             </a>
             <a
               href="https://drive.google.com/open?id=1prx7wtQJdo9aTFeP0Wo6XmYVF8wigora&usp=drive_fs"
@@ -83,79 +67,80 @@ const Hero = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Resume
+              Download Resume
               <FiDownload size={18} className="transition-transform group-hover:translate-y-0.5" />
             </a>
           </motion.div>
 
           <motion.div variants={itemVariants} className="mt-8 flex flex-wrap gap-6">
-            <a href="https://github.com/aman-singh-negi" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
-              <FiGithub size={18} className="transition-transform group-hover:scale-110" /> GitHub
+            <a href="https://github.com/aman-singh-negi" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
+              <FiGithub size={18} className="transition-transform group-hover:scale-110" />
+              GitHub
             </a>
-            <a href="https://www.linkedin.com/in/aman-singh-negi0/" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
-              <FiLinkedin size={18} className="transition-transform group-hover:scale-110" /> LinkedIn
+            <a href="https://www.linkedin.com/in/aman-singh-negi0/" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
+              <FiLinkedin size={18} className="transition-transform group-hover:scale-110" />
+              LinkedIn
             </a>
-            <a href="https://leetcode.com/amansinghnegi" target="_blank" rel="noopener noreferrer" className="text-sm font-semibold flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group">
-              <SiLeetcode size={18} className="transition-transform group-hover:scale-110" /> LeetCode
+            <a href="https://leetcode.com/amansinghnegi" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground">
+              <SiLeetcode size={18} className="transition-transform group-hover:scale-110" />
+              LeetCode
             </a>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="mt-14 grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <motion.div variants={itemVariants} className="mt-14 grid gap-4 sm:grid-cols-3">
             {trustStats.map((stat) => (
-              <div key={stat.label} className="glass-panel rounded-2xl p-5 hover:-translate-y-1 transition-transform duration-300 group">
-                <p className="text-3xl font-extrabold tracking-tight text-foreground transition-colors group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-gray-500 group-hover:to-gray-900 group-hover:dark:from-gray-100 group-hover:dark:to-gray-400">
-                  {stat.value}
-                </p>
-                <p className="mt-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide">{stat.label}</p>
+              <div key={stat.label} className="metric-tile group">
+                <p className="font-['Space_Grotesk'] text-4xl font-bold tracking-[-0.05em] text-foreground">{stat.value}</p>
+                <p className="mt-2 text-xs font-black uppercase tracking-[0.22em] text-muted-foreground">{stat.label}</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{stat.detail}</p>
               </div>
             ))}
           </motion.div>
         </motion.div>
 
-        {/* Right side - 3D Visual & Info Cards */}
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.95 }}
+          initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
           animate={reduceMotion ? {} : { opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="relative lg:h-[600px] flex flex-col justify-center"
+          transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="relative"
         >
-          {/* A sleek background glow specifically for the 3D element backing, localized to prevent full-page repaint lag */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/5 h-4/5 bg-foreground/5 blur-[100px] rounded-full pointer-events-none" />
-          
-          <div className="glass-panel p-2 rounded-[2rem] h-[400px] lg:h-[450px] relative overflow-hidden group border border-border shadow-2xl">
-            <div className="absolute top-4 left-4 z-10 kicker bg-background/50 backdrop-blur-md border-border text-foreground text-[10px]">
-              Interactive WebGL
+          <div className="absolute -left-8 top-12 h-40 w-40 rounded-full bg-[var(--accent)]/20 blur-[70px]" />
+          <div className="absolute -right-4 bottom-14 h-48 w-48 rounded-full bg-[var(--accent-secondary)]/20 blur-[90px]" />
+
+          <div className="premium-panel relative overflow-hidden rounded-[2.5rem] border border-border p-3">
+            <div className="absolute left-5 top-5 z-10">
+              <span className="kicker bg-[color:var(--bg-elevated)]/70 text-foreground">Interactive profile object</span>
             </div>
-            
-            <div className="w-full h-full rounded-2xl overflow-hidden bg-background/50 relative">
-              <Suspense fallback={
-                <div className="w-full h-full flex items-center justify-center animate-pulse">
-                  <div className="w-24 h-24 rounded-full border border-border" />
-                </div>
-              }>
+
+            <div className="relative h-[420px] overflow-hidden rounded-[2rem] bg-[linear-gradient(180deg,rgba(255,255,255,0.22),rgba(255,255,255,0.04))] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] lg:h-[520px]">
+              <Suspense
+                fallback={
+                  <div className="flex h-full w-full items-center justify-center">
+                    <div className="h-24 w-24 rounded-full border border-border animate-pulse" />
+                  </div>
+                }
+              >
                 <HeroObject3D />
               </Suspense>
+
+              <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[color:var(--background)]/90 to-transparent" />
             </div>
-            
-            {/* Overlay Gradient on hover to add depth */}
-            <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-background/80 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
 
-          <div className="mt-8 space-y-3">
+          <div className="mt-6 grid gap-3">
             {signalRows.map((row, index) => (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6 + index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="flex gap-4 text-sm text-muted-foreground font-medium items-center glass-panel rounded-xl p-3.5 px-5 hover:-translate-x-1 transition-transform"
+                key={row}
+                initial={reduceMotion ? false : { opacity: 0, x: 18 }}
+                animate={reduceMotion ? {} : { opacity: 1, x: 0 }}
+                transition={{ delay: 0.55 + index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="glass-panel flex items-center gap-4 rounded-[1.4rem] px-5 py-4"
               >
-                <div className="w-1.5 h-1.5 rounded-full shrink-0 bg-foreground/40 dark:bg-foreground/80" />
-                <p>{row}</p>
+                <div className="h-2.5 w-2.5 rounded-full bg-[var(--accent)] shadow-[0_0_16px_rgba(255,107,53,0.45)] dark:bg-[var(--accent-secondary)] dark:shadow-[0_0_16px_rgba(103,232,249,0.45)]" />
+                <p className="text-sm font-medium leading-relaxed text-muted-foreground">{row}</p>
               </motion.div>
             ))}
           </div>
-
         </motion.div>
       </div>
     </section>
@@ -163,4 +148,3 @@ const Hero = () => {
 };
 
 export default Hero;
-

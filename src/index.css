@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,44 +6,51 @@
 
 @layer base {
   :root {
-    --background: #ffffff;
-    --foreground: #09090b;
-    --muted: #f4f4f5;
-    --muted-foreground: #71717a;
-    --border: #e4e4e7;
-    --border-strong: #d4d4d8;
-    --card: rgba(255, 255, 255, 0.6);
+    --background: #f3efe7;
+    --foreground: #0d1321;
+    --muted: rgba(255, 255, 255, 0.52);
+    --muted-foreground: #556070;
+    --border: rgba(13, 19, 33, 0.12);
+    --border-strong: rgba(13, 19, 33, 0.22);
+    --card: rgba(255, 255, 255, 0.58);
     --card-hover: rgba(255, 255, 255, 0.8);
-    --glass-border: rgba(0, 0, 0, 0.05);
+    --glass-border: rgba(13, 19, 33, 0.08);
+    --accent: #ff6b35;
+    --accent-soft: rgba(255, 107, 53, 0.16);
+    --accent-secondary: #0f766e;
+    --shadow-color: 20 24 34;
     
     /* Legacy fallback */
     --bg: var(--background);
-    --bg-soft: var(--muted);
-    --bg-elevated: #ffffff;
+    --bg-soft: rgba(255, 255, 255, 0.44);
+    --bg-elevated: rgba(255, 255, 255, 0.82);
     --surface: var(--card);
-    --surface-strong: #fafafa;
+    --surface-strong: rgba(255, 255, 255, 0.94);
     --text: var(--foreground);
     --text-muted: var(--muted-foreground);
-    --heading: #09090b;
+    --heading: #0d1321;
   }
 
   .dark {
-    /* Extreme Neon Void optimized */
-    --background: #030303;
-    --foreground: #fafafa;
-    --muted: #18181b;
-    --muted-foreground: #a1a1aa;
-    --border: #2e2e33;
-    --border-strong: #3f3f46;
-    --card: #0c0c0e;
-    --card-hover: #121214;
+    --background: #07111f;
+    --foreground: #f8fafc;
+    --muted: rgba(15, 23, 42, 0.78);
+    --muted-foreground: #94a3b8;
+    --border: rgba(148, 163, 184, 0.16);
+    --border-strong: rgba(148, 163, 184, 0.28);
+    --card: rgba(8, 16, 30, 0.68);
+    --card-hover: rgba(12, 22, 40, 0.86);
     --glass-border: rgba(255, 255, 255, 0.08);
+    --accent: #ffd166;
+    --accent-soft: rgba(255, 209, 102, 0.16);
+    --accent-secondary: #67e8f9;
+    --shadow-color: 2 6 23;
 
     --bg: var(--background);
     --bg-soft: var(--muted);
-    --bg-elevated: #09090b;
+    --bg-elevated: rgba(12, 22, 40, 0.92);
     --surface: var(--card);
-    --surface-strong: #18181b;
+    --surface-strong: rgba(15, 23, 42, 0.96);
     --text: var(--foreground);
     --text-muted: var(--muted-foreground);
     --heading: #ffffff;
@@ -57,9 +64,13 @@
   }
 
   body {
+    background:
+      radial-gradient(circle at top left, rgba(255, 107, 53, 0.14), transparent 32%),
+      radial-gradient(circle at 85% 18%, rgba(15, 118, 110, 0.12), transparent 26%),
+      linear-gradient(135deg, #f8f4ed 0%, #efe7db 45%, #f6f2ea 100%);
     background-color: var(--background);
     color: var(--foreground);
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Manrope', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
@@ -69,18 +80,25 @@
     cursor: none; /* For Custom Cursor */
   }
 
+  .dark body {
+    background:
+      radial-gradient(circle at 18% 20%, rgba(103, 232, 249, 0.1), transparent 28%),
+      radial-gradient(circle at 82% 12%, rgba(255, 209, 102, 0.12), transparent 24%),
+      linear-gradient(160deg, #040b16 0%, #07111f 40%, #0b1930 100%);
+  }
+
   ::selection {
-    background-color: theme('colors.neon.violet');
+    background-color: var(--accent);
     color: #ffffff;
   }
 
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.03em;
+    font-family: 'Space Grotesk', 'Manrope', system-ui, sans-serif;
   }
 }
 
 @layer components {
-  /* Layout Classes for Massive Breathing Room */
   .section-shell {
     @apply relative py-32 md:py-40 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto;
   }
@@ -90,7 +108,7 @@
   }
 
   .section-title {
-    @apply text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter text-foreground mb-6 leading-tight;
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-foreground mb-6 leading-tight;
   }
 
   .section-copy {
@@ -98,14 +116,19 @@
   }
 
   .editorial-card {
-    @apply relative border border-border bg-card hover:bg-card-hover backdrop-blur-3xl shadow-[0_8px_32px_-12px_rgba(0,0,0,0.4)] transition-all duration-500 ease-out;
+    @apply relative border border-border bg-card hover:bg-card-hover backdrop-blur-3xl transition-all duration-500 ease-out;
+    box-shadow:
+      0 18px 60px -30px rgba(var(--shadow-color), 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
   .premium-panel {
-    @apply relative border border-border bg-card shadow-2xl;
+    @apply relative border border-border bg-card;
+    box-shadow:
+      0 30px 80px -40px rgba(var(--shadow-color), 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 
-  /* Ultra-Premium glass effect */
   .glass-panel {
     background: var(--card);
     backdrop-filter: blur(24px);
@@ -120,33 +143,35 @@
     border-color: var(--border-strong);
   }
 
-  /* Magnetic / Glow buttons */
   .btn-primary {
     @apply relative inline-flex items-center justify-center gap-2 px-6 py-3 md:px-8 md:py-4 rounded-full font-bold transition-all duration-300 overflow-hidden text-sm md:text-base;
-    background: var(--foreground);
-    color: var(--background);
+    background: linear-gradient(135deg, var(--foreground), color-mix(in srgb, var(--foreground) 72%, var(--accent) 28%));
+    color: #fffdf9;
     will-change: transform;
     z-index: 1;
+    box-shadow: 0 18px 40px -20px rgba(var(--shadow-color), 0.8);
   }
 
   .btn-primary::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, theme('colors.neon.violet'), theme('colors.neon.cyan'));
+    background: linear-gradient(110deg, var(--accent), var(--accent-secondary));
     z-index: -1;
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    opacity: 0.92;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    transform: translateX(-14%);
   }
   
   .btn-primary:hover::before {
-    opacity: 1;
+    transform: translateX(0);
   }
   
   .btn-primary:hover {
     color: #ffffff;
-    box-shadow: 0 0 20px theme('colors.neon.violet');
+    box-shadow: 0 24px 50px -22px rgba(var(--shadow-color), 0.9);
     border-color: transparent;
+    transform: translateY(-2px);
   }
 
   .btn-primary:active {
@@ -155,45 +180,44 @@
 
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 md:px-8 md:py-4 rounded-full font-bold transition-all duration-300 text-sm md:text-base;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.22);
     color: var(--foreground);
     border: 1px solid var(--border);
     will-change: transform;
+    backdrop-filter: blur(18px);
   }
 
   .btn-secondary:hover {
-    background: var(--muted);
+    background: var(--bg-elevated);
     border-color: var(--border-strong);
+    transform: translateY(-2px);
   }
   
   .btn-secondary:active {
     transform: scale(0.96);
   }
 
-  /* Kicker / Eyebrow */
   .kicker {
     @apply inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-black tracking-[0.2em] uppercase;
-    background: var(--muted);
+    background: var(--accent-soft);
     color: var(--muted-foreground);
     border: 1px solid var(--border);
   }
 
-  /* Neon text gradient */
   .text-gradient {
-    background: linear-gradient(to right, theme('colors.neon.violet'), theme('colors.neon.cyan'));
+    background: linear-gradient(120deg, var(--accent), var(--accent-secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   
   .dark .text-gradient {
-    background: linear-gradient(to right, theme('colors.neon.cyan'), theme('colors.neon.fuchsia'));
+    background: linear-gradient(120deg, var(--accent), var(--accent-secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Projects Bento Cards */
   .bento-card {
     @apply relative overflow-hidden rounded-[2.5rem] p-8 sm:p-10 border border-border;
     background: var(--card);
@@ -204,6 +228,31 @@
   .bento-card:hover {
     background: var(--card-hover);
     transform: translateY(-6px);
+  }
+
+  .display-eyebrow {
+    @apply text-xs font-black uppercase tracking-[0.32em] text-muted-foreground;
+  }
+
+  .metric-tile {
+    @apply glass-panel rounded-[1.8rem] p-5 md:p-6;
+    box-shadow: 0 20px 50px -35px rgba(var(--shadow-color), 0.7);
+  }
+
+  .mesh-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(70px);
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  .cta-primary {
+    @apply btn-primary;
+  }
+
+  .cta-secondary {
+    @apply btn-secondary;
   }
 }
 

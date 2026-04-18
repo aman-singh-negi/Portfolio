@@ -1,9 +1,9 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { FiArrowLeft, FiArrowUpRight } from 'react-icons/fi';
-import sihCertificate from '../assets/SIH Certificate.png';
+import blockchainCertificate from '../assets/Blockchain Fundamentals.png';
 import flipkartCertificate from '../assets/Flipkart Grid6.0.png';
 import mlCertificate from '../assets/Machine Learning by Andrew NG.png';
-import blockchainCertificate from '../assets/Blockchain Fundamentals.png';
+import sihCertificate from '../assets/SIH Certificate.png';
 
 type Certificate = {
   title: string;
@@ -27,7 +27,7 @@ const certificates: Certificate[] = [
     title: 'Flipkart Grid 6.0',
     issuer: 'Unstop',
     date: '2024',
-    description: 'Placed in the top 10% in the Flipkart GRID 6.0 Tech Quiz.',
+    description: 'Placed in the top 10% of the Flipkart GRID 6.0 Tech Quiz.',
     image: flipkartCertificate,
     link: 'https://drive.google.com/open?id=1N3Qq1nuYx9d62wqTjcSX8qNI60B-gDR1&usp=drive_fs',
   },
@@ -58,19 +58,20 @@ const Certificates = ({ fullPage = false, onBackToHome }: CertificatesProps) => 
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="certificates" className={`${fullPage ? 'pb-24' : 'section-shell'}`}>
+    <section id="certificates" className={fullPage ? 'pb-24' : 'section-shell'}>
       <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-5">
-          <div className="section-kicker">Certificates</div>
+          <p className="display-eyebrow">Certificates</p>
+          <div className="section-kicker">Recognition and continued learning</div>
           <h2 className="section-title">
-            {fullPage ? 'A fuller view of certifications and recognition.' : 'Certificates and continued learning.'}
+            {fullPage ? 'A fuller view of certifications and recognition.' : 'Credentials that support the broader engineering story.'}
           </h2>
           <p className="section-copy">
-            A mix of competition-based recognition and self-driven learning that supports the broader product and engineering story.
+            A mix of competition-based recognition and self-driven learning that reinforces the broader product and engineering narrative.
           </p>
         </div>
         {fullPage && onBackToHome ? (
-          <button onClick={onBackToHome} className="cta-secondary self-start lg:self-auto">
+          <button onClick={onBackToHome} className="btn-secondary self-start lg:self-auto">
             <FiArrowLeft />
             Back to home
           </button>
@@ -85,16 +86,14 @@ const Certificates = ({ fullPage = false, onBackToHome }: CertificatesProps) => 
             whileInView={reduceMotion ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.45, delay: index * 0.06 }}
-            className="premium-panel rounded-[1.7rem]"
+            className="premium-panel overflow-hidden rounded-[2rem]"
           >
-            <div className="relative h-52 overflow-hidden">
-              <img src={certificate.image} alt={certificate.title} className="h-full w-full object-cover" />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(4,10,20,0.55))]" />
+            <div className="relative h-56 overflow-hidden">
+              <img src={certificate.image} alt={certificate.title} className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(5,8,16,0.55))]" />
             </div>
-            <div className="relative z-10 flex h-[calc(100%-13rem)] flex-col p-5">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-[color:var(--text-muted)]">
-                {certificate.issuer} • {certificate.date}
-              </p>
+            <div className="relative z-10 flex h-[calc(100%-14rem)] flex-col p-6">
+              <p className="display-eyebrow">{certificate.issuer} / {certificate.date}</p>
               <h3 className="mt-4 font-['Space_Grotesk'] text-2xl font-bold tracking-[-0.04em] text-[color:var(--heading)]">
                 {certificate.title}
               </h3>

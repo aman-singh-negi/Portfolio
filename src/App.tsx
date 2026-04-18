@@ -23,12 +23,15 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="page-shell page-grid min-h-screen overflow-x-hidden text-[color:var(--text)] relative">
+      <div className="page-shell page-grid relative min-h-screen overflow-x-hidden text-[color:var(--text)]">
+        <div className="mesh-orb left-[-8rem] top-[8rem] h-72 w-72 bg-[var(--accent)]/40" />
+        <div className="mesh-orb right-[-6rem] top-[34rem] h-80 w-80 bg-[var(--accent-secondary)]/30" />
+        <div className="mesh-orb bottom-[10rem] left-[30%] h-64 w-64 bg-white/20 dark:bg-[var(--accent)]/15" />
         <CustomCursor />
         <Analytics />
         <CommandPalette />
         <ParticlesBackground />
-        
+
         <AnimatePresence mode="wait">
           {isLoading ? (
             <LoadingScreen key="loading" onLoadingComplete={() => setIsLoading(false)} />
@@ -63,8 +66,8 @@ function App() {
                       <Contact />
                     </div>
                   </main>
-                  <footer className="border-t border-[color:var(--border)] px-4 py-8 text-center text-sm text-[color:var(--text-muted)] mt-12 bg-background/50 backdrop-blur-md relative z-10">
-                    <p>© {new Date().getFullYear()} Aman Singh Negi. Crafted for high-signal storytelling.</p>
+                  <footer className="relative z-10 mt-12 border-t border-[color:var(--border)] bg-[color:var(--card)]/60 px-4 py-8 text-center text-sm text-[color:var(--text-muted)] backdrop-blur-md">
+                    <p>&copy; {new Date().getFullYear()} Aman Singh Negi. Designed as an immersive proof of taste, execution, and range.</p>
                   </footer>
                 </>
               )}

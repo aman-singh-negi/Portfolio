@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { FiAlertCircle, FiCheckCircle, FiMail, FiSend } from 'react-icons/fi';
-import { collection, addDoc, serverTimestamp, getDocs, limit, query, Firestore } from 'firebase/firestore';
-import { logEvent, Analytics } from 'firebase/analytics';
+import { addDoc, collection, Firestore, getDocs, limit, query, serverTimestamp } from 'firebase/firestore';
+import { Analytics, logEvent } from 'firebase/analytics';
 import { analytics, db } from '../firebase/config';
 
 const Contact = () => {
@@ -82,7 +82,7 @@ const Contact = () => {
   };
 
   const inputClasses =
-    'w-full rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--bg-soft)] px-4 py-3.5 text-[color:var(--heading)] outline-none transition-colors duration-200 placeholder:text-[color:var(--text-muted)] focus:border-[color:var(--border-strong)]';
+    'w-full rounded-[1.2rem] border border-[color:var(--border)] bg-[color:var(--bg-elevated)] px-4 py-3.5 text-[color:var(--heading)] outline-none transition-colors duration-200 placeholder:text-[color:var(--text-muted)] focus:border-[color:var(--border-strong)]';
 
   return (
     <section id="contact" className="section-shell">
@@ -93,14 +93,15 @@ const Contact = () => {
           viewport={{ once: true }}
           className="space-y-5"
         >
-          <div className="section-kicker">Contact</div>
-          <h2 className="section-title">A simpler, clearer way to start a conversation.</h2>
+          <p className="display-eyebrow">Contact</p>
+          <div className="section-kicker">Open for ambitious work</div>
+          <h2 className="section-title">A direct, low-friction way to start a conversation.</h2>
           <p className="section-copy">
-            Whether it’s a project, collaboration, internship, or just a good technical conversation, I’m open to hearing from you.
+            Whether it&apos;s a project, collaboration, internship, or a strong technical conversation, I&apos;m open to hearing from you.
           </p>
 
           <div className="editorial-card rounded-[1.8rem] p-6">
-            <p className="text-sm font-bold uppercase tracking-[0.24em] text-[color:var(--text-muted)]">Direct email</p>
+            <p className="display-eyebrow">Direct email</p>
             <a
               href="mailto:lavishnegi7249@gmail.com"
               className="mt-4 inline-flex items-center gap-3 font-['Space_Grotesk'] text-2xl font-bold tracking-[-0.04em] text-[color:var(--heading)]"
@@ -115,7 +116,7 @@ const Contact = () => {
 
           {firebaseStatus === 'error' ? (
             <div className="rounded-[1.5rem] border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-500">
-              Firestore connection looks unavailable right now. Email is the safest contact route.
+              Firestore looks unavailable right now. Email is the safest contact route.
             </div>
           ) : null}
         </motion.div>
@@ -176,11 +177,7 @@ const Contact = () => {
               />
             </label>
 
-            <button
-              type="submit"
-              disabled={formStatus === 'submitting'}
-              className="cta-primary mt-2 w-full transition-transform duration-200 hover:-translate-y-0.5"
-            >
+            <button type="submit" disabled={formStatus === 'submitting'} className="cta-primary mt-2 w-full transition-transform duration-200 hover:-translate-y-0.5">
               <FiSend />
               {formStatus === 'submitting' ? 'Sending...' : 'Send message'}
             </button>
@@ -195,7 +192,7 @@ const Contact = () => {
             {formStatus === 'error' ? (
               <div className="flex items-center gap-3 rounded-[1.2rem] border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-500">
                 <FiAlertCircle />
-                There was a problem sending your message. Please try again or email me directly.
+                There was a problem sending your message. Please try again or email directly.
               </div>
             ) : null}
           </div>
