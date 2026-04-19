@@ -1,6 +1,6 @@
-import { memo, useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { FiArrowUpRight, FiCommand, FiMenu, FiX } from 'react-icons/fi';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiMenu, FiX, FiCode } from 'react-icons/fi';
 import ThemeToggle from './ThemeToggle';
 
 type NavLink = {
@@ -13,193 +13,165 @@ const navLinks: NavLink[] = [
   { name: 'About', href: '#about' },
   { name: 'Projects', href: '#projects' },
   { name: 'Skills', href: '#skills' },
+  { name: 'Education', href: '#education' },
   { name: 'Experience', href: '#experience' },
+  { name: 'Certificates', href: '#certificates' },
   { name: 'Contact', href: '#contact' },
 ];
 
-interface NavbarProps {
-  onHomeClick?: () => void;
-  onCertificatesClick?: () => void;
-}
-
-const Navbar = ({ onHomeClick, onCertificatesClick }: NavbarProps) => {
+const Navbar = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
 
+  // Handle scroll event to update active section and navbar style
   useEffect(() => {
-    const sections = Array.from(document.querySelectorAll('section[id]'));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visibleEntry?.target.id) {
-          setActiveSection(visibleEntry.target.id);
+    const handleScroll = () => {
+      // Update navbar style based on scroll position
+      setScrolled(window.scrollY > 50);
+      
+      // Hide/show navbar based on scroll direction
+      const currentScrollPos = window.scrollY;
+      const isVisible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
+      
+      setPrevScrollPos(currentScrollPos);
+      setVisible(isVisible);
+      
+      // Update active section based on scroll position
+      const sections = document.querySelectorAll('section[id]');
+      sections.forEach((section) => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const sectionId = section.getAttribute('id');
+        
+        if (sectionTop < 100 && sectionTop > -100 && sectionId) {
+          setActiveSection(sectionId);
         }
-      },
-      {
-        rootMargin: '-35% 0px -45% 0px',
-        threshold: [0.1, 0.3, 0.6],
-      },
-    );
+      });
+    };
 
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
-  }, []);
-
-  const handleNavClick = (href: string) => {
-    setIsOpen(false);
-    if (href === '#home') {
-      onHomeClick?.();
-    }
-  };
-
-  const openCommandPalette = () => {
-    const event = new KeyboardEvent('keydown', {
-      key: 'k',
-      metaKey: true,
-      bubbles: true,
-    });
-    window.dispatchEvent(event);
-  };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [prevScrollPos]);
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-40 flex w-full justify-center px-4 pt-6">
-      <div className="pointer-events-auto w-full max-w-5xl">
-        <div className="glass-panel mx-auto flex items-center justify-between rounded-[2rem] border border-border bg-[color:var(--card)]/70 px-4 py-3 shadow-[0_20px_60px_-36px_rgba(0,0,0,0.75)] backdrop-blur-2xl">
-          <a href="#home" onClick={() => handleNavClick('#home')} className="group flex items-center gap-4" aria-label="Home">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-foreground text-sm font-extrabold text-background transition-transform duration-300 group-hover:scale-110">
-              AN
-            </div>
-            <div className="hidden md:block">
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Portfolio</p>
-              <p className="font-['Space_Grotesk'] text-sm font-bold tracking-[0.02em] text-foreground">Aman Singh Negi</p>
-            </div>
-          </a>
+    <header 
+      className={`fixed w-full z-40 transition-all duration-300 
+        ${scrolled 
+          ? 'py-3 bg-light/95 dark:bg-dark/95 backdrop-blur-md shadow-xl border-b border-gray-200/20 dark:border-gray-800/20' 
+          : 'py-5 bg-light/80 dark:bg-dark/80 backdrop-blur-sm'
+        }
+        ${visible ? 'top-0' : '-top-20'}`}
+    >
+      <nav className="container mx-auto px-4 sm:px-6 flex justify-between items-center relative">
+        {/* Logo */}
+        <motion.a 
+          href="#home"
+          className="flex items-center space-x-2 group"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <span className="relative overflow-hidden rounded-full p-2 bg-gradient-to-br from-accent1/20 to-accent2/20 group-hover:from-accent1/30 group-hover:to-accent2/30 transition-all duration-300">
+            <FiCode className="text-gray-700 dark:text-accent1 w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+          </span>
+          <span className="text-2xl font-bold gradient-text">
+            Aman
+          </span>
+        </motion.a>
 
-          <nav className="relative z-10 hidden items-center gap-1 rounded-full border border-border/60 bg-white/20 p-1 md:flex dark:bg-white/5">
-            {navLinks.map((link) => {
-              const active = activeSection === link.href.slice(1);
-              return (
-                <a
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-1">
+          {navLinks.map((link, index) => (
+            <motion.a
+              key={link.name}
+              href={link.href}
+              className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 
+                ${activeSection === link.href.substring(1) 
+                  ? 'text-gray-900 dark:text-accent1 bg-accent1/20 dark:bg-accent1/10 shadow-md' 
+                  : 'text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-accent2 hover:bg-gray-100 dark:hover:bg-accent2/5'}`}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {link.name}
+              {activeSection === link.href.substring(1) && (
+                <motion.span 
+                  className="absolute bottom-0 left-0 right-0 mx-auto w-1/2 h-0.5 bg-gradient-to-r from-accent1 to-accent2"
+                  layoutId="navbar-indicator"
+                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                />
+              )}
+            </motion.a>
+          ))}
+        </div>
+
+        {/* Mobile Menu Button */}
+        <div className="flex items-center md:hidden">
+          <motion.button
+            onClick={() => setIsOpen(!isOpen)}
+            className="p-2 rounded-full bg-gradient-to-br from-accent1/10 to-accent2/10 hover:from-accent1/20 hover:to-accent2/20 transition-all duration-300 focus:outline-none"
+            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.1 }}
+            aria-label="Toggle menu"
+          >
+            {isOpen 
+              ? <FiX size={24} className="text-gray-700 dark:text-accent2" /> 
+              : <FiMenu size={24} className="text-gray-700 dark:text-accent1" />}
+          </motion.button>
+        </div>
+      </nav>
+
+      {/* Mobile Navigation */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-light/95 dark:bg-dark/95 backdrop-blur-md pt-20"
+            initial={{ opacity: 0, clipPath: 'circle(0% at top right)' }}
+            animate={{ opacity: 1, clipPath: 'circle(150% at top right)' }}
+            exit={{ opacity: 0, clipPath: 'circle(0% at top right)' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="container mx-auto px-6 py-8 flex flex-col space-y-6">
+              {navLinks.map((link, index) => (
+                <motion.a
                   key={link.name}
                   href={link.href}
-                  onClick={() => handleNavClick(link.href)}
-                  className={`relative rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
-                    active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-                  }`}
+                  className={`text-2xl font-medium flex items-center space-x-2 p-3 rounded-lg
+                    ${activeSection === link.href.substring(1) 
+                      ? 'text-accent1 bg-accent1/10' 
+                      : 'text-gray-700 dark:text-gray-300'}`}
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  onClick={() => setIsOpen(false)}
+                  whileHover={{ x: 10, backgroundColor: 'rgba(var(--accent2-rgb), 0.1)' }}
                 >
-                  {active ? (
-                    <motion.div
-                      layoutId="activeNavIndicator"
-                      className="absolute inset-0 rounded-full border border-border/70 bg-[color:var(--bg-elevated)] shadow-sm"
-                      transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }}
-                    />
-                  ) : null}
-                  <span className="relative z-10">{link.name}</span>
-                </a>
-              );
-            })}
-          </nav>
-
-          <div className="relative z-10 flex items-center gap-3">
-            <button
-              onClick={openCommandPalette}
-              className="hidden items-center gap-2 rounded-full border border-border bg-[color:var(--bg-elevated)]/80 px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-all hover:scale-105 hover:bg-[color:var(--bg-elevated)] md:flex"
-              aria-label="Command Palette"
-            >
-              <span>Command</span>
-              <kbd className="rounded bg-foreground/10 px-1 font-mono text-[10px] font-bold uppercase text-foreground">Ctrl K</kbd>
-            </button>
-
-            <button
-              onClick={onCertificatesClick}
-              className="group hidden h-10 w-10 items-center justify-center rounded-full border border-border bg-white/20 text-muted-foreground transition-all hover:border-transparent hover:bg-foreground hover:text-background lg:flex dark:bg-white/5"
-              aria-label="Certificates"
-              title="Certificates"
-            >
-              <FiArrowUpRight className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </button>
-
-            <ThemeToggle />
-
-            <button
-              onClick={() => setIsOpen((prev) => !prev)}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white/20 text-foreground transition-all hover:bg-[color:var(--bg-elevated)] md:hidden dark:bg-white/5"
-              aria-label="Toggle menu"
-            >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={isOpen ? 'close' : 'open'}
-                  initial={{ opacity: 0, rotate: -90 }}
-                  animate={{ opacity: 1, rotate: 0 }}
-                  exit={{ opacity: 0, rotate: 90 }}
-                  transition={{ duration: 0.15 }}
-                >
-                  {isOpen ? <FiX size={18} /> : <FiMenu size={18} />}
-                </motion.div>
-              </AnimatePresence>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {isOpen ? (
-          <motion.div
-            className="pointer-events-auto fixed inset-x-4 top-[5.7rem] z-30 md:hidden"
-            initial={{ opacity: 0, y: -10, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.96 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="glass-panel rounded-[2rem] border border-border bg-[color:var(--bg-elevated)] p-3 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)]">
-              <div className="flex flex-col gap-1">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => handleNavClick(link.href)}
-                    className={`rounded-2xl px-4 py-3.5 text-sm font-semibold transition-colors ${
-                      activeSection === link.href.slice(1)
-                        ? 'bg-foreground text-background'
-                        : 'text-muted-foreground hover:bg-[color:var(--muted)] hover:text-foreground'
-                    }`}
-                  >
+                  <span className="relative overflow-hidden">
                     {link.name}
-                  </a>
-                ))}
-
-                <div className="my-2 h-px bg-border" />
-
-                <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    onCertificatesClick?.();
-                  }}
-                  className="flex items-center justify-between rounded-2xl px-4 py-3.5 text-left text-sm font-semibold text-muted-foreground hover:bg-[color:var(--muted)] hover:text-foreground"
-                >
-                  View Certificates
-                  <FiArrowUpRight />
-                </button>
-                <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    openCommandPalette();
-                  }}
-                  className="flex items-center justify-between rounded-2xl px-4 py-3.5 text-left text-sm font-semibold text-muted-foreground hover:bg-[color:var(--muted)] hover:text-foreground"
-                >
-                  Command Palette
-                  <FiCommand />
-                </button>
-              </div>
+                    {activeSection === link.href.substring(1) && (
+                      <motion.span 
+                        className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-accent1 to-accent2"
+                        layoutId="mobile-navbar-indicator"
+                      />
+                    )}
+                  </span>
+                </motion.a>
+              ))}
             </div>
           </motion.div>
-        ) : null}
+        )}
       </AnimatePresence>
+
+      {/* Theme Toggle - Now positioned within the navbar */}
+      <div className="absolute right-16 sm:right-20 md:right-0 top-1/2 transform -translate-y-1/2">
+        <ThemeToggle />
+      </div>
     </header>
   );
 };
 
-export default memo(Navbar);
+export default Navbar;

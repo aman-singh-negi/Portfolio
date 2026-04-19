@@ -69,27 +69,10 @@ This project is configured for easy deployment on Vercel or Netlify.
 
 ### Deploying to Vercel
 
-1. Push your code to a GitHub repository
-
-2. Connect your repository to Vercel:
-   - Sign up or log in to [Vercel](https://vercel.com)
-   - Click "New Project" and import your GitHub repository
-   - Select the "Vite" framework preset
-   - Configure environment variables (see below)
-   - Click "Deploy"
-
-3. Environment Variables Setup:
-   - In your Vercel project settings, go to "Environment Variables"
-   - Add the following variables from your `.env` file:
-     ```
-     VITE_FIREBASE_API_KEY
-     VITE_FIREBASE_AUTH_DOMAIN
-     VITE_FIREBASE_PROJECT_ID
-     VITE_FIREBASE_STORAGE_BUCKET
-     VITE_FIREBASE_MESSAGING_SENDER_ID
-     VITE_FIREBASE_APP_ID
-     VITE_FIREBASE_MEASUREMENT_ID
-     ```
+```bash
+npm install -g vercel
+vercel
+```
 
 ### Deploying to Netlify
 
@@ -97,8 +80,6 @@ This project is configured for easy deployment on Vercel or Netlify.
 npm install -g netlify-cli
 netlify deploy
 ```
-
-Don't forget to configure the same environment variables in Netlify's project settings.
 
 ## 🎨 Customization
 

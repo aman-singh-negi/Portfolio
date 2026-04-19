@@ -1,79 +1,155 @@
-import { motion, useReducedMotion } from 'framer-motion';
-import SpotlightCard from '../components/SpotlightCard';
+import { useRef } from 'react';
+import { motion } from 'framer-motion';
+
+type Skill = {
+  name: string;
+  level: number; // 0-100
+  color: string;
+};
 
 type SkillCategory = {
   title: string;
-  summary: string;
-  skills: string[];
+  skills: Skill[];
 };
 
 const skillCategories: SkillCategory[] = [
   {
-    title: 'Frontend Systems',
-    summary: 'Interfaces that are responsive, structured, and intentionally designed.',
-    skills: ['React', 'TypeScript', 'Tailwind CSS', 'Three.js', 'Next.js'],
+    title: 'Programming Languages',
+    skills: [
+      { name: 'Python', level: 95, color: '#3776AB' },
+      { name: 'C++', level: 90, color: '#00599C' },
+      { name: 'Java', level: 85, color: '#ED8B00' },
+      { name: 'C', level: 80, color: '#A8B9CC' },
+      { name: 'JavaScript', level: 95, color: '#F7DF1E' },
+      { name: 'TypeScript', level: 85, color: '#3178C6' },
+    ],
   },
   {
-    title: 'Backend and Data',
-    summary: 'Practical API and database work with an emphasis on product usefulness and clean architecture.',
-    skills: ['Node.js', 'Express', 'MongoDB', 'SQL', 'PostgreSQL'],
+    title: 'AI/ML & Data Science',
+    skills: [
+      { name: 'Machine Learning', level: 88, color: '#FF6F00' },
+      { name: 'Deep Learning', level: 85, color: '#FF4081' },
+      { name: 'TensorFlow', level: 80, color: '#FF6F00' },
+      { name: 'PyTorch', level: 75, color: '#EE4C2C' },
+      { name: 'Scikit-learn', level: 85, color: '#F7931E' },
+      { name: 'Pandas', level: 90, color: '#150458' },
+    ],
   },
   {
-    title: 'AI and ML',
-    summary: 'A strong interest in real-world machine learning, computer vision, and model-backed product workflows.',
-    skills: ['TensorFlow', 'PyTorch', 'Scikit-learn', 'Pandas', 'Computer Vision'],
+    title: 'Frontend Development',
+    skills: [
+      { name: 'React', level: 90, color: '#61DAFB' },
+      { name: 'HTML/CSS', level: 90, color: '#E34F26' },
+      { name: 'Tailwind CSS', level: 85, color: '#06B6D4' },
+      { name: 'Three.js', level: 70, color: '#000000' },
+      { name: 'Next.js', level: 80, color: '#000000' },
+    ],
   },
   {
-    title: 'Programming Core',
-    summary: 'Algorithmic thinking sharpened through competitive programming and systems-oriented practice.',
-    skills: ['Python', 'C++', 'Java', 'C', 'JavaScript'],
+    title: 'Backend & Database',
+    skills: [
+      { name: 'Node.js', level: 80, color: '#339933' },
+      { name: 'Express', level: 85, color: '#000000' },
+      { name: 'MongoDB', level: 75, color: '#47A248' },
+      { name: 'SQL', level: 80, color: '#4479A1' },
+      { name: 'PostgreSQL', level: 75, color: '#336791' },
+    ],
+  },
+  {
+    title: 'Tools & Technologies',
+    skills: [
+      { name: 'Git', level: 85, color: '#F05032' },
+      { name: 'Docker', level: 70, color: '#2496ED' },
+      { name: 'AWS', level: 65, color: '#FF9900' },
+      { name: 'Linux', level: 80, color: '#FCC624' },
+      { name: 'Jupyter', level: 85, color: '#F37626' },
+    ],
   },
 ];
 
+const SkillBar = ({ skill, index }: { skill: Skill; index: number }) => {
+  return (
+    <motion.div 
+      className="mb-4"
+      initial={{ opacity: 0, x: -50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: true }}
+    >
+      <div className="flex justify-between mb-1">
+        <span className="font-medium text-gray-700 dark:text-gray-300">{skill.name}</span>
+        <span className="text-sm text-gray-500 dark:text-gray-400">{skill.level}%</span>
+      </div>
+      
+      <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <motion.div 
+          className="h-full rounded-full"
+          style={{ backgroundColor: skill.color }}
+          initial={{ width: 0 }}
+          whileInView={{ width: `${skill.level}%` }}
+          transition={{ duration: 1, delay: index * 0.1 }}
+          viewport={{ once: true }}
+        />
+      </div>
+    </motion.div>
+  );
+};
+
+const SkillCategory = ({ category, index }: { category: SkillCategory; index: number }) => {
+  return (
+    <motion.div
+      className="bg-light/50 dark:bg-dark/50 backdrop-blur-lg rounded-xl p-6 shadow-lg
+                border border-gray-200 dark:border-gray-800"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+      viewport={{ once: true, margin: '-100px' }}
+    >
+      <h3 className="text-xl font-bold mb-6 text-center gradient-text">
+        {category.title}
+      </h3>
+      
+      <div>
+        {category.skills.map((skill, idx) => (
+          <SkillBar key={skill.name} skill={skill} index={idx} />
+        ))}
+      </div>
+    </motion.div>
+  );
+};
+
 const Skills = () => {
-  const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
 
   return (
-    <section id="skills" className="section-shell">
-      <div className="mb-16 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-        <div className="space-y-6">
-          <p className="display-eyebrow">Capabilities</p>
-          <div className="section-kicker">Built for practical contribution</div>
-          <h2 className="section-title">A cleaner view of where I create the most value.</h2>
+    <section 
+      id="skills" 
+      ref={sectionRef}
+      className="min-h-screen py-20 snap-start"
+    >
+      <div className="container mx-auto px-6">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <span className="gradient-text">
+              Skills & Expertise
+            </span>
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Here's a breakdown of my technical skills and proficiency levels in various technologies.
+          </p>
+        </motion.div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {skillCategories.map((category, index) => (
+            <SkillCategory key={category.title} category={category} index={index} />
+          ))}
         </div>
-        <p className="section-copy">
-          Instead of animated percentage bars, this section frames my strengths as capability areas:
-          shipping interfaces, building product logic, and applying AI where it genuinely helps.
-        </p>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        {skillCategories.map((category, index) => (
-          <motion.article
-            key={category.title}
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-            whileInView={reduceMotion ? {} : { opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10%' }}
-            transition={{ duration: 0.5, delay: index * 0.06 }}
-          >
-            <SpotlightCard className="editorial-card h-full rounded-[2.5rem] p-8 md:p-10">
-              <p className="display-eyebrow">{category.title}</p>
-              <p className="mt-5 font-['Space_Grotesk'] text-2xl font-bold leading-snug tracking-[-0.04em] text-foreground md:text-3xl">
-                {category.summary}
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                {category.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="rounded-full border border-border bg-white/30 px-4 py-2 text-sm font-bold text-foreground transition-all hover:-translate-y-1 hover:bg-foreground hover:text-background dark:bg-white/5"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </SpotlightCard>
-          </motion.article>
-        ))}
       </div>
     </section>
   );

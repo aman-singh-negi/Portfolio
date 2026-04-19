@@ -1,42 +1,25 @@
-import { useRef, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import '../styles/SpotlightText.css';
+import React from 'react';
 
-const SpotlightText = () => {
-  const spotlightRef = useRef<HTMLDivElement>(null);
-  const [spotlightPosition, setSpotlightPosition] = useState({ x: 0, y: 0 });
+interface SpotlightTextProps {
+  children: React.ReactNode;
+  className?: string;
+  as?: keyof JSX.IntrinsicElements;
+}
 
-  useEffect(() => {
-    const spotlight = spotlightRef.current;
-    if (!spotlight) return;
-
-    const updateSpotlight = (e: MouseEvent) => {
-      const rect = spotlight.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      setSpotlightPosition({ x, y });
-    };
-
-    const options: AddEventListenerOptions = { passive: true };
-    document.addEventListener('mousemove', updateSpotlight, options);
-
-    return () => {
-      document.removeEventListener('mousemove', updateSpotlight, options);
-    };
-  }, []);
-
+const SpotlightText: React.FC<SpotlightTextProps> = ({ 
+  children, 
+  className = '', 
+  as: Component = 'span' 
+}) => {
+  const textContent = typeof children === 'string' ? children : '';
+  
   return (
-    <div ref={spotlightRef} className="spotlight-container">
-      <motion.div
-        className="spotlight"
-        animate={{
-          left: spotlightPosition.x,
-          top: spotlightPosition.y,
-        }}
-        transition={{ type: 'spring', stiffness: 300, damping: 40 }}
-      />
-      <h1 className="spotlight-text">Welcome to My Portfolio</h1>
-    </div>
+    <Component 
+      className={`spotlight-text ${className}`}
+      {...({ 'data-text': textContent } as any)}
+    >
+      {children}
+    </Component>
   );
 };
 

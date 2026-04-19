@@ -1,11 +1,9 @@
-import { motion, useReducedMotion } from 'framer-motion';
-import { FiArrowLeft, FiArrowUpRight } from 'react-icons/fi';
-import blockchainCertificate from '../assets/Blockchain Fundamentals.png';
-import flipkartCertificate from '../assets/Flipkart Grid6.0.png';
-import mlCertificate from '../assets/Machine Learning by Andrew NG.png';
-import sihCertificate from '../assets/SIH Certificate.png';
+import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { FiExternalLink, FiAward } from 'react-icons/fi';
 
 type Certificate = {
+  id: number;
   title: string;
   issuer: string;
   date: string;
@@ -16,102 +14,123 @@ type Certificate = {
 
 const certificates: Certificate[] = [
   {
+    id: 1,
     title: 'Smart India Hackathon Finalist',
     issuer: 'Ministry of Education, Government of India',
-    date: '2024',
-    description: 'Finalist recognition for an AI-driven institutional inspection system.',
-    image: sihCertificate,
-    link: 'https://drive.google.com/open?id=1QmfF8yLnm3gQ_Ep3vLWdrmIri9lKww7m&usp=drive_fs',
-  },
-  {
-    title: 'Flipkart Grid 6.0',
-    issuer: 'Unstop',
-    date: '2024',
-    description: 'Placed in the top 10% of the Flipkart GRID 6.0 Tech Quiz.',
-    image: flipkartCertificate,
-    link: 'https://drive.google.com/open?id=1N3Qq1nuYx9d62wqTjcSX8qNI60B-gDR1&usp=drive_fs',
-  },
-  {
-    title: 'Machine Learning by Andrew Ng',
-    issuer: 'Coursera',
     date: '2023',
-    description: 'Covered supervised learning foundations including regression and classification.',
-    image: mlCertificate,
-    link: 'https://coursera.org/share/fef50358f2e642a45db3ec05676a81d8',
+    description: 'Finalist in the world\'s biggest hackathon with an AI-driven institutional inspection system.',
+    image: '/certificates/sih.jpg',
+    link: '#'
   },
   {
-    title: 'Blockchain Fundamentals',
-    issuer: 'Chainlink',
-    date: '2024',
-    description: 'Completed a fundamentals course focused on blockchain concepts and applications.',
-    image: blockchainCertificate,
-    link: 'https://drive.google.com/open?id=1jhrWRohikaWw_rV5WSnfYtuB3rU1TeOu&usp=drive_fs',
+    id: 2,
+    title: 'CodeChef 3-Star Coder',
+    issuer: 'CodeChef',
+    date: '2023',
+    description: 'Achieved 3-star rating on CodeChef with a highest rating of 1651.',
+    image: '/certificates/codechef.jpg',
+    link: 'https://www.codechef.com/users/aman_negi'
   },
+  {
+    id: 3,
+    title: 'LeetCode Problem Solver',
+    issuer: 'LeetCode',
+    date: '2023',
+    description: 'Solved 300+ problems on LeetCode across various difficulty levels and topics.',
+    image: '/certificates/leetcode.jpg',
+    link: 'https://leetcode.com/u/amansinghnegi/'
+  },
+  {
+    id: 4,
+    title: 'Flipkart GRID 6.0 Tech Quiz',
+    issuer: 'Flipkart',
+    date: '2023',
+    description: 'Secured position in top 10% in the Flipkart GRID 6.0 Tech Quiz.',
+    image: '/certificates/flipkart.jpg',
+    link: '#'
+  }
 ];
 
-interface CertificatesProps {
-  fullPage?: boolean;
-  onBackToHome?: () => void;
-}
+const CertificateCard = ({ certificate }: { certificate: Certificate }) => {
+  return (
+    <motion.div
+      className="bg-light/50 dark:bg-dark/50 backdrop-blur-lg rounded-xl overflow-hidden shadow-lg
+                border border-gray-200 dark:border-gray-800 h-full flex flex-col"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: certificate.id * 0.1 }}
+      viewport={{ once: true, margin: '-100px' }}
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+    >
+      <div className="relative h-48 bg-gradient-to-r from-accent1/20 to-accent2/20 flex items-center justify-center">
+        <FiAward className="text-6xl text-accent1" />
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/30 dark:to-black/50" />
+      </div>
+      
+      <div className="p-6 flex-grow">
+        <h3 className="text-xl font-bold mb-2 gradient-text">
+          {certificate.title}
+        </h3>
+        
+        <div className="flex justify-between mb-4">
+          <span className="text-sm text-gray-600 dark:text-gray-400">{certificate.issuer}</span>
+          <span className="text-sm text-gray-500 dark:text-gray-500">{certificate.date}</span>
+        </div>
+        
+        <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
+          {certificate.description}
+        </p>
+      </div>
+      
+      {certificate.link && (
+        <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+          <a 
+            href={certificate.link} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center text-gray-700 dark:text-accent1 hover:text-gray-900 dark:hover:text-accent2 transition-colors duration-300"
+          >
+            <span className="mr-2">View Certificate</span>
+            <FiExternalLink size={16} />
+          </a>
+        </div>
+      )}
+    </motion.div>
+  );
+};
 
-const Certificates = ({ fullPage = false, onBackToHome }: CertificatesProps) => {
-  const reduceMotion = useReducedMotion();
+const Certificates = () => {
+  const sectionRef = useRef<HTMLElement>(null);
 
   return (
-    <section id="certificates" className={fullPage ? 'pb-24' : 'section-shell'}>
-      <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-        <div className="space-y-5">
-          <p className="display-eyebrow">Certificates</p>
-          <div className="section-kicker">Recognition and continued learning</div>
-          <h2 className="section-title">
-            {fullPage ? 'A fuller view of certifications and recognition.' : 'Credentials that support the broader engineering story.'}
+    <section 
+      id="certificates" 
+      ref={sectionRef}
+      className="min-h-screen py-20 snap-start"
+    >
+      <div className="container mx-auto px-6">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <span className="gradient-text">
+              Certificates & Achievements
+            </span>
           </h2>
-          <p className="section-copy">
-            A mix of competition-based recognition and self-driven learning that reinforces the broader product and engineering narrative.
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            Recognition and certifications I've earned throughout my journey.
           </p>
+        </motion.div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {certificates.map((certificate) => (
+            <CertificateCard key={certificate.id} certificate={certificate} />
+          ))}
         </div>
-        {fullPage && onBackToHome ? (
-          <button onClick={onBackToHome} className="btn-secondary self-start lg:self-auto">
-            <FiArrowLeft />
-            Back to home
-          </button>
-        ) : null}
-      </div>
-
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        {certificates.map((certificate, index) => (
-          <motion.article
-            key={certificate.title}
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-            whileInView={reduceMotion ? {} : { opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, delay: index * 0.06 }}
-            className="premium-panel overflow-hidden rounded-[2rem]"
-          >
-            <div className="relative h-56 overflow-hidden">
-              <img src={certificate.image} alt={certificate.title} className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(5,8,16,0.55))]" />
-            </div>
-            <div className="relative z-10 flex h-[calc(100%-14rem)] flex-col p-6">
-              <p className="display-eyebrow">{certificate.issuer} / {certificate.date}</p>
-              <h3 className="mt-4 font-['Space_Grotesk'] text-2xl font-bold tracking-[-0.04em] text-[color:var(--heading)]">
-                {certificate.title}
-              </h3>
-              <p className="mt-3 flex-1 text-sm leading-7 text-[color:var(--text-muted)]">{certificate.description}</p>
-              {certificate.link ? (
-                <a
-                  href={certificate.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.16em] text-[color:var(--heading)]"
-                >
-                  View credential
-                  <FiArrowUpRight />
-                </a>
-              ) : null}
-            </div>
-          </motion.article>
-        ))}
       </div>
     </section>
   );
