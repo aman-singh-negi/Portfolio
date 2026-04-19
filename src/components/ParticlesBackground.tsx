@@ -22,28 +22,42 @@ const ParticlesBackground = () => {
       color: {
         value: 'transparent',
       },
-      // Removed laggy CSS blobs, using this optimized canvas overlay
     },
     fpsLimit: 60,
+    interactivity: {
+      events: {
+        onHover: {
+          enable: true,
+          mode: 'repulse',
+        },
+        resize: true,
+      },
+      modes: {
+        repulse: {
+          distance: 100,
+          duration: 0.4,
+        },
+      },
+    },
     particles: {
       color: {
-        value: particleColor,
+        value: isDark ? '#8b5cf6' : '#ff6b35', // Match neon theme
       },
       links: {
-        color: lineColor,
-        distance: 140,
+        color: isDark ? '#67e8f9' : '#0f766e',
+        distance: 150,
         enable: true,
-        opacity: lineOpacity,
-        width: 1,
+        opacity: lineOpacity * 2,
+        width: 1.5,
       },
       move: {
         enable: true,
-        speed: 0.6,
-        direction: 'none' as const,
+        speed: 0.8,
+        direction: 'top' as const, // Antigravity: move upwards
         random: true,
         straight: false,
         outModes: {
-          default: 'bounce' as const,
+          default: 'out' as const,
         },
       },
       number: {
@@ -51,20 +65,20 @@ const ParticlesBackground = () => {
           enable: true,
           area: 800,
         },
-        value: 70, // Kept low for performance
+        value: 60,
       },
       opacity: {
-        value: particleOpacity,
+        value: particleOpacity * 2,
       },
       shape: {
-        type: 'circle',
+        type: 'triangle', // More techy shape
       },
       size: {
-        value: { min: 1, max: 2 },
+        value: { min: 1, max: 3 },
       },
     },
     detectRetina: true,
-  }), [isDark, particleColor, lineColor, particleOpacity, lineOpacity]);
+  }), [isDark, particleOpacity, lineOpacity]);
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none">

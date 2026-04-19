@@ -1,43 +1,78 @@
-import { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface LoadingScreenProps {
   onLoadingComplete: () => void;
 }
 
+const bootSequence = [
+  "INITIALIZING ANTIGRAVITY KERNEL...",
+  "LOADING NEURAL WEIGHTS [██████████] 100%",
+  "BYPASSING GRAVITY PROTOCOLS...",
+  "ESTABLISHING UPLINK TO AMAN SINGH NEGI...",
+  "SYNCHRONIZING VOID INTERFACE...",
+  "ACCESS GRANTED."
+];
+
 const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
+  const [lines, setLines] = useState<string[]>([]);
+  const [isComplete, setIsComplete] = useState(false);
+
   useEffect(() => {
-    const timer = window.setTimeout(onLoadingComplete, 1400);
-    return () => window.clearTimeout(timer);
+    let currentLine = 0;
+    const interval = setInterval(() => {
+      setLines((prev) => [...prev, bootSequence[currentLine]]);
+      currentLine++;
+      
+      if (currentLine >= bootSequence.length) {
+        clearInterval(interval);
+        setTimeout(() => {
+          setIsComplete(true);
+          setTimeout(onLoadingComplete, 800);
+        }, 600);
+      }
+    }, 250); // fast cinematic boot
+
+    return () => clearInterval(interval);
   }, [onLoadingComplete]);
 
   return (
-    <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[color:var(--bg)]"
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
-    >
-      <div className="premium-panel noise-overlay relative flex w-[min(92vw,28rem)] flex-col gap-5 rounded-[2rem] px-8 py-10 text-center">
-        <div className="section-kicker mx-auto">Portfolio System</div>
-        <div>
-          <p className="font-['Space_Grotesk'] text-4xl font-bold tracking-[-0.08em] text-[color:var(--heading)]">
-            Aman Singh Negi
-          </p>
-          <p className="mt-3 text-sm uppercase tracking-[0.28em] text-[color:var(--text-muted)]">
-            Editorial Futurism
-          </p>
-        </div>
-        <div className="h-1.5 overflow-hidden rounded-full bg-black/5 dark:bg-white/10">
-          <motion.div
-            className="h-full rounded-full bg-[linear-gradient(135deg,var(--accent),var(--accent-2),var(--accent-3))]"
-            initial={{ width: '0%' }}
-            animate={{ width: '100%' }}
-            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </div>
-      </div>
-    </motion.div>
+    <AnimatePresence>
+      {!isComplete && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#030712] text-[#67e8f9] font-mono text-sm md:text-base p-6"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
+          transition={{ duration: 0.8, ease: 'easeInOut' }}
+        >
+          <div className="w-full max-w-2xl bg-black/40 border border-[#67e8f9]/20 p-6 rounded-lg backdrop-blur-md shadow-[0_0_40px_rgba(103,232,249,0.1)]">
+            <div className="flex gap-2 mb-4">
+              <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+              <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+            </div>
+            <div className="flex flex-col gap-2">
+              {lines.map((line, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="flex gap-3"
+                >
+                  <span className="text-muted-foreground opacity-50">&gt;</span>
+                  <span>{line}</span>
+                </motion.div>
+              ))}
+              <motion.div 
+                animate={{ opacity: [0, 1, 0] }} 
+                transition={{ repeat: Infinity, duration: 0.8 }}
+                className="w-2.5 h-5 bg-[#67e8f9] mt-1 ml-5"
+              />
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
