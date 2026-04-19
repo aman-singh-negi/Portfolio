@@ -11,8 +11,6 @@ const ParticlesBackground = () => {
   }, []);
 
   const isDark = theme === 'dark';
-  const particleColor = isDark ? '#ffffff' : '#000000';
-  const lineColor = isDark ? '#ffffff' : '#000000';
   const particleOpacity = isDark ? 0.2 : 0.08;
   const lineOpacity = isDark ? 0.08 : 0.05;
 
