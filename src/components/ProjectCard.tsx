@@ -10,7 +10,7 @@ interface ProjectCardProps {
   imageUrl?: string;
 }
 
-export const ProjectCard = ({ title, category, description, techStack, link, imageUrl }: ProjectCardProps) => {
+export const ProjectCard = ({ title, category, description, techStack, imageUrl }: ProjectCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   
   // Mouse position relative to the card

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useInView } from 'framer-motion';
 
 const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
 
@@ -30,7 +30,7 @@ export const DecryptText = ({
       let currentInterval: number | null = null;
 
       const scramble = () => {
-        setDisplayText((prev) => {
+        setDisplayText(() => {
           return text
             .split('')
             .map((char, index) => {

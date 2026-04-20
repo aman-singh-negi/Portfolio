@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+
 
 const Contact = () => {
   const [status, setStatus] = useState<'idle' | 'typing' | 'sending' | 'sent'>('idle');
