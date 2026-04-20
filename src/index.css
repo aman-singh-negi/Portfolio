@@ -17,9 +17,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   cursor: none !important;
-  font-family: 'Inter', sans-serif;
-  background-color: #050505;
-  color: #8A8F98;
+  font-family: 'Roboto', sans-serif;
 }
 
 body *, body *::before, body *::after {
