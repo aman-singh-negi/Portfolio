@@ -45,20 +45,20 @@ const ProjectCard = ({ project, index }: { project: any, index: number }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative glass-card rounded-3xl p-8 overflow-hidden h-full flex flex-col interactive"
+      transition={{ duration: 0.8, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+      className="group relative glass-card rounded-[2rem] p-8 md:p-10 overflow-hidden h-full flex flex-col interactive"
       onMouseMove={onMouseMove}
     >
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-px rounded-[2rem] opacity-0 transition duration-500 group-hover:opacity-100"
         style={{
           background: useMotionTemplate`
             radial-gradient(
-              650px circle at ${mouseX}px ${mouseY}px,
-              rgba(0, 255, 204, 0.15),
+              800px circle at ${mouseX}px ${mouseY}px,
+              rgba(34, 211, 238, 0.15),
               transparent 80%
             )
           `,
@@ -66,26 +66,26 @@ const ProjectCard = ({ project, index }: { project: any, index: number }) => {
       />
       
       <div className="relative z-10 flex-grow">
-        <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-primary transition-colors duration-300">{project.title}</h3>
-        <p className="text-gray-400 mb-6 leading-relaxed">
+        <h3 className="text-3xl font-bold mb-4 text-white group-hover:text-cyan-400 transition-colors duration-500 tracking-tight">{project.title}</h3>
+        <p className="text-gray-400 mb-8 leading-relaxed font-light text-lg">
           {project.description}
         </p>
         
-        <div className="flex flex-wrap gap-2 mb-8">
+        <div className="flex flex-wrap gap-2 mb-10">
           {project.technologies.map((tech: string) => (
-            <span key={tech} className="text-xs font-medium px-3 py-1 rounded-full border border-white/10 bg-white/5 text-gray-300">
+            <span key={tech} className="text-xs font-mono px-3 py-1.5 rounded-full border border-cyan-400/20 bg-cyan-400/5 text-cyan-200">
               {tech}
             </span>
           ))}
         </div>
       </div>
       
-      <div className="relative z-10 flex items-center gap-4 mt-auto pt-4 border-t border-white/5">
-        <a href={project.githubUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
-          <FiGithub /> Code
+      <div className="relative z-10 flex items-center gap-6 mt-auto pt-6 border-t border-white/10">
+        <a href={project.githubUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-semibold tracking-wide text-gray-400 hover:text-white transition-colors interactive">
+          <FiGithub size={18} /> Source
         </a>
-        <a href={project.liveUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm text-gray-400 hover:text-primary transition-colors">
-          <FiExternalLink /> Live Demo
+        <a href={project.liveUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-semibold tracking-wide text-gray-400 hover:text-cyan-400 transition-colors interactive">
+          <FiExternalLink size={18} /> View Live
         </a>
       </div>
     </motion.div>
@@ -94,24 +94,26 @@ const ProjectCard = ({ project, index }: { project: any, index: number }) => {
 
 const Projects = () => {
   return (
-    <section id="projects" className="w-full py-24 px-6 relative">
+    <section id="projects" className="w-full py-32 px-6 relative">
+      <div className="ambient-glow top-0 left-0 bg-[radial-gradient(circle,rgba(34,211,238,0.05)_0%,rgba(0,0,0,0)_60%)] translate-x-[-30%] translate-y-[10%]" />
+      
       <div className="container max-w-6xl mx-auto">
         <motion.div 
-          className="mb-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
+          className="mb-20 text-center"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Featured <span className="text-gradient">Projects</span>
+          <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6">
+            Featured <span className="text-gradient">Work</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            A selection of my recent work. Real-world solutions built with modern technology stacks.
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg md:text-xl font-light">
+            A curated selection of my recent engineering projects. Showcasing scalable architecture and premium front-end experiences.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <ProjectCard key={project.title} project={project} index={index} />
           ))}
