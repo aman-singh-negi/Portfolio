@@ -19,8 +19,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Initialize Analytics only if supported (prevents errors in environments where it's not available)
-let analytics = null;
+import type { Analytics } from 'firebase/analytics';
+let analytics: Analytics | null = null;
 
 // Create a function to initialize analytics safely
 const initializeAnalytics = async () => {
