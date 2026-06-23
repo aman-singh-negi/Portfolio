@@ -1,0 +1,801 @@
+# MASTER PROMPT — Build a World-Class Premium Portfolio Website
+
+You are a senior product designer, UX designer, creative developer, and frontend architect. Your job is not to build a traditional developer portfolio, but to create a world-class digital experience that demonstrates exceptional UI/UX taste, engineering skills, and attention to detail.
+
+The final product should feel like a combination of Apple × Linear × Vercel × Stripe × Framer × Arc Browser.
+
+The website itself should be the portfolio.
+
+The goal is to create a "wow" factor where visitors immediately think:
+
+"This person has exceptional taste and understands both design and engineering."
+
+---
+
+# Core Principles
+
+Prioritize:
+
+* Simplicity
+* Elegance
+* Premium aesthetics
+* Whitespace
+* Typography
+* Microinteractions
+* Motion design
+* Accessibility
+* Performance
+* Responsiveness
+
+Avoid:
+
+* Generic portfolio templates
+* Excessive gradients
+* Heavy glassmorphism
+* Too many colors
+* Over-the-top animations
+* Particle backgrounds
+* Neon cyberpunk designs
+* Logo dumps
+* Clutter
+
+Everything should feel intentional.
+
+---
+
+# Tech Stack
+
+Use:
+
+* Next.js 15 App Router
+* TypeScript
+* Tailwind CSS v4
+* Shadcn UI
+* Framer Motion
+* Motion Primitives
+* Lenis Smooth Scroll
+* Aceternity UI components where appropriate
+* React Three Fiber only if subtle
+* Vercel deployment
+
+Architecture should be modular and scalable.
+
+---
+
+# Themes
+
+Support handcrafted Dark and Light modes.
+
+Dark Theme
+
+Background:
+
+#09090B
+
+Cards:
+
+#111113
+
+Borders:
+
+rgba(255,255,255,.08)
+
+Primary text:
+
+White
+
+Secondary text:
+
+#A1A1AA
+
+Accent:
+
+#4F8CFF
+
+Inspired by Linear and Vercel.
+
+---
+
+Light Theme
+
+Background:
+
+#FFFFFF
+
+Cards:
+
+#F7F8FA
+
+Primary text:
+
+#111111
+
+Secondary:
+
+#52525B
+
+Accent:
+
+#4F8CFF
+
+Inspired by Apple and Arc Browser.
+
+Theme transitions should be smooth and beautiful.
+
+---
+
+# Typography
+
+Heading Font:
+
+General Sans or Satoshi
+
+Body Font:
+
+Inter
+
+Massive typography.
+
+Hero heading:
+
+80px+
+
+Section headings:
+
+56px
+
+Body:
+
+16px
+
+Large line spacing.
+
+Generous whitespace.
+
+Typography should carry the design.
+
+---
+
+# Global Experience
+
+The entire site should feel like a premium software product.
+
+Scrolling should feel buttery.
+
+Motion should feel slow and elegant.
+
+Everything should feel handcrafted.
+
+---
+
+# Sections
+
+Loading Screen
+
+Hero
+
+Quick Overview
+
+About
+
+Journey Timeline
+
+Achievements
+
+Certificates
+
+Projects
+
+Skills & Toolbox
+
+GitHub Activity
+
+Coding Profiles
+
+Stats Dashboard
+
+Currently Exploring
+
+Fun Facts
+
+Testimonials
+
+Resume
+
+Contact
+
+Footer
+
+---
+
+# Loading Screen
+
+Simple.
+
+Center:
+
+AN
+
+Subtitle:
+
+Crafting Experiences
+
+Fade away after one second.
+
+Elegant animation.
+
+---
+
+# Hero Section
+
+Full viewport.
+
+Huge typography.
+
+Name:
+
+AMAN NEGI
+
+Subtitle:
+
+Building thoughtful digital experiences, AI-powered products and performant applications.
+
+Buttons:
+
+View Work
+
+Download Resume
+
+Background:
+
+Animated mesh gradient.
+
+Noise texture.
+
+Soft spotlight.
+
+Tiny blur blobs.
+
+Mouse-based parallax.
+
+Very subtle.
+
+---
+
+# Hero Animations
+
+Stagger text animation.
+
+Fade up.
+
+Magnetic buttons.
+
+Soft cursor interactions.
+
+Everything smooth.
+
+---
+
+# Navigation
+
+Sticky.
+
+Transparent with blur.
+
+Active section indicator.
+
+Contains:
+
+Work
+
+Journey
+
+Achievements
+
+Contact
+
+Theme toggle
+
+Command palette
+
+Include scroll progress indicator.
+
+---
+
+# Quick Overview
+
+Premium cards.
+
+Projects
+
+LeetCode
+
+CodeChef
+
+Codeforces
+
+SIH Finalist
+
+Tech Stack
+
+Animated counters.
+
+Hover effects.
+
+Spotlight effect.
+
+---
+
+# About Section
+
+Magazine layout.
+
+Large quote:
+
+"I enjoy designing clean interfaces and building products that feel effortless."
+
+Short story.
+
+Avoid long paragraphs.
+
+---
+
+# Timeline
+
+Vertical animated timeline.
+
+Milestones appear while scrolling.
+
+Elegant line animations.
+
+Cards stagger in.
+
+---
+
+# Achievements
+
+Premium cards.
+
+SIH Finalist
+
+Competitive Programming
+
+Hackathons
+
+LeetCode
+
+CodeChef
+
+Spotlight hover.
+
+Soft shadows.
+
+Lift effect.
+
+---
+
+# Certificates
+
+Horizontal scroll carousel.
+
+Certificate cards should have:
+
+Image
+
+Issuer
+
+Title
+
+Date
+
+View button
+
+Effects:
+
+Image zoom
+
+Shine animation
+
+Tilt effect
+
+Support categories.
+
+---
+
+# Projects
+
+Magazine layout.
+
+Not grids.
+
+Alternating left-right structure.
+
+Large screenshots.
+
+Image reveal.
+
+Smooth hover zoom.
+
+Tech stack pills.
+
+Github button.
+
+Live demo button.
+
+Status badge.
+
+Beautiful transitions.
+
+---
+
+# Skills
+
+Categorized:
+
+Frontend
+
+Backend
+
+AI
+
+Database
+
+DevOps
+
+Design
+
+Represent skills using floating pills.
+
+Avoid logo dumps.
+
+---
+
+# GitHub Activity
+
+Contribution graph.
+
+Repositories.
+
+Commits.
+
+Languages.
+
+Animated counters.
+
+---
+
+# Coding Profiles
+
+LeetCode
+
+Codeforces
+
+CodeChef
+
+GitHub
+
+Beautiful cards.
+
+Display:
+
+Ratings
+
+Solved problems
+
+Badges
+
+Links
+
+---
+
+# Stats Dashboard
+
+Animated numbers.
+
+Projects
+
+Problems solved
+
+Hackathons
+
+Certificates
+
+Commits
+
+Count-up animations.
+
+---
+
+# Currently Exploring
+
+Progress bars.
+
+Machine Learning
+
+System Design
+
+DSA
+
+Web Performance
+
+Beautiful progress indicators.
+
+---
+
+# Fun Facts
+
+Interactive cards.
+
+Night Owl
+
+Mountain Lover
+
+Music Lover
+
+Competitive Programmer
+
+AI Enthusiast
+
+Cards slightly rotate.
+
+Hover interactions.
+
+---
+
+# Testimonials
+
+Glass cards.
+
+Slow carousel.
+
+Pause on hover.
+
+Premium spacing.
+
+---
+
+# Resume
+
+Resume preview card.
+
+Download button.
+
+ATS score.
+
+Summary.
+
+---
+
+# Contact
+
+Minimal.
+
+Email.
+
+Github.
+
+LinkedIn.
+
+Twitter.
+
+Large CTA:
+
+Let's build something meaningful.
+
+---
+
+# Footer
+
+Minimal.
+
+Designed and developed by Aman Negi.
+
+Elegant typography.
+
+---
+
+# Advanced Features
+
+Command Palette
+
+Ctrl + K
+
+Inspired by Linear.
+
+Search:
+
+Projects
+
+Resume
+
+Certificates
+
+Github
+
+LinkedIn
+
+Achievements
+
+---
+
+Scroll Progress Bar
+
+Thin line.
+
+Framer Motion powered.
+
+---
+
+Custom Cursor
+
+Tiny dot.
+
+Expands slightly.
+
+No giant circles.
+
+---
+
+Magnetic Buttons
+
+Subtle attraction.
+
+---
+
+Spotlight Hover
+
+Cards react to mouse position.
+
+Very subtle.
+
+---
+
+Dock Navigation
+
+MacOS inspired.
+
+Desktop only.
+
+Floating bottom center.
+
+---
+
+Back To Top Button
+
+Appears on scroll.
+
+---
+
+Theme Transition
+
+Smooth.
+
+No flashes.
+
+---
+
+Smooth Scroll
+
+Lenis.
+
+---
+
+Reveal Animations
+
+Framer Motion.
+
+Fade.
+
+Scale.
+
+Slide.
+
+Stagger.
+
+Never excessive.
+
+---
+
+Easter Eggs
+
+Typing:
+
+sudo hire aman
+
+opens a terminal modal.
+
+Displays:
+
+Thank you for visiting :)
+
+---
+
+Konami code unlocks hidden animation.
+
+---
+
+Double-click logo rotates website briefly.
+
+---
+
+Background System
+
+Noise texture.
+
+Blur gradients.
+
+Animated spotlight.
+
+Tiny floating particles.
+
+Nothing distracting.
+
+---
+
+Microinteractions
+
+Buttons scale 1.03.
+
+Cards lift.
+
+Links animate underline.
+
+Icons rotate slightly.
+
+Soft shadows.
+
+Hover states should feel luxurious.
+
+---
+
+Accessibility
+
+Keyboard navigation.
+
+Focus states.
+
+Reduced motion support.
+
+High contrast.
+
+Responsive on all devices.
+
+---
+
+Performance
+
+95+ Lighthouse.
+
+Lazy loading.
+
+GPU accelerated animations.
+
+Image optimization.
+
+Fast loading.
+
+---
+
+Inspiration
+
+Apple
+
+Linear
+
+Vercel
+
+Stripe
+
+Framer
+
+Arc Browser
+
+Rauno
+
+Build something that feels less like a portfolio and more like a premium software product.
+
+Do not compromise on spacing, typography, motion, or interactions.
+
+Obsess over details.
+
+Every pixel should feel intentional.
