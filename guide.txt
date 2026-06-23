@@ -1,0 +1,827 @@
+# Aman Negi Portfolio — Premium Product Experience
+
+## Goal
+
+Do not build a traditional developer portfolio.
+
+Build a luxurious digital product experience inspired by Apple, Linear, Vercel, Stripe, Arc Browser, Framer and modern award-winning websites.
+
+The visitor should feel:
+
+"This person has exceptional attention to detail."
+
+The portfolio itself should demonstrate UI, UX, frontend engineering, motion design, and taste.
+
+---
+
+# Design Philosophy
+
+Keywords:
+
+* Minimal
+* Premium
+* Sophisticated
+* Elegant
+* Editorial
+* Interactive
+* Spacious
+* Timeless
+
+Avoid:
+
+* Flashy gradients everywhere
+* Excessive particles
+* Too many colors
+* Generic developer portfolio layouts
+* Large icon dumps
+* Heavy glassmorphism
+
+Everything should feel intentional.
+
+---
+
+# Themes
+
+Support both dark and light themes.
+
+## Dark Theme
+
+Background:
+
+#09090B
+
+Cards:
+
+#111113
+
+Text:
+
+#FFFFFF
+
+Secondary:
+
+#A1A1AA
+
+Accent:
+
+Blue or Purple
+
+Inspired by:
+
+Linear + Vercel
+
+---
+
+## Light Theme
+
+Background:
+
+#FFFFFF
+
+Cards:
+
+#F7F8FA
+
+Text:
+
+#111111
+
+Secondary:
+
+#52525B
+
+Accent:
+
+Same accent as dark mode.
+
+Inspired by:
+
+Apple + Arc Browser.
+
+Theme transitions should animate smoothly.
+
+---
+
+# Typography
+
+Heading Font:
+
+General Sans or Satoshi
+
+Body Font:
+
+Inter
+
+Hero heading:
+
+80px+
+
+Large section titles:
+
+56px
+
+Body:
+
+16px
+
+Huge emphasis on whitespace and readability.
+
+---
+
+# Layout
+
+Single-page experience.
+
+Section order:
+
+Loading Screen
+
+Hero
+
+Quick Overview
+
+About
+
+Journey Timeline
+
+Achievements
+
+Certificates
+
+Projects
+
+Skills & Toolbox
+
+GitHub Activity
+
+Coding Profiles
+
+Stats Dashboard
+
+Currently Exploring
+
+Fun Facts
+
+Testimonials
+
+Resume
+
+Contact
+
+Footer
+
+---
+
+# Loading Screen
+
+Minimal.
+
+Center logo:
+
+AN
+
+Text:
+
+Crafting experiences.
+
+Soft fade-out.
+
+Duration:
+
+1 second.
+
+---
+
+# Navigation
+
+Sticky top navigation.
+
+Glass blur background.
+
+Active section indicator.
+
+Contains:
+
+Work
+
+Journey
+
+Achievements
+
+Contact
+
+Theme Toggle
+
+Command Menu Button
+
+Scroll progress bar at top.
+
+---
+
+# Hero Section
+
+Full viewport.
+
+Large typography.
+
+Name:
+
+AMAN NEGI
+
+Subtitle:
+
+Building thoughtful digital experiences, AI-powered products and performant applications.
+
+Buttons:
+
+View Work
+
+Download Resume
+
+Background:
+
+Subtle animated gradient mesh.
+
+Noise texture.
+
+Soft spotlight.
+
+Tiny floating blur elements.
+
+No flashy effects.
+
+---
+
+# Hero Interactions
+
+Text stagger animation.
+
+Buttons have magnetic hover.
+
+Mouse movement creates subtle parallax.
+
+Background reacts softly.
+
+---
+
+# Quick Overview
+
+Grid cards.
+
+Projects
+
+LeetCode
+
+CodeChef
+
+SIH Finalist
+
+Codeforces
+
+Tech Stack
+
+Animated counters.
+
+Cards glow on hover.
+
+---
+
+# About Section
+
+Split layout.
+
+Left:
+
+Large statement:
+
+I enjoy designing clean interfaces and building products that feel effortless.
+
+Right:
+
+Short story.
+
+Avoid long paragraphs.
+
+---
+
+# Journey Timeline
+
+Vertical timeline.
+
+Animated while scrolling.
+
+Milestones:
+
+Started Programming
+
+Competitive Programming
+
+Hackathons
+
+AI Projects
+
+Placements
+
+Cards appear with stagger animations.
+
+---
+
+# Achievements
+
+Premium cards.
+
+SIH Finalist
+
+CodeChef 3 Star
+
+LeetCode
+
+Hackathons
+
+Competitive Programming
+
+Cards have spotlight hover effects.
+
+---
+
+# Certificates
+
+Horizontal carousel.
+
+Each certificate card contains:
+
+Image
+
+Issuer
+
+Title
+
+Date
+
+View Button
+
+Hover effects:
+
+Image zoom
+
+Shine effect
+
+Tilt effect
+
+Support categories:
+
+Google
+
+Microsoft
+
+Coursera
+
+Udemy
+
+AWS
+
+---
+
+# Projects
+
+Magazine-style layout.
+
+Large screenshots.
+
+Alternating layout.
+
+Smooth image reveal.
+
+Hover zoom.
+
+Project card contains:
+
+Name
+
+Description
+
+Tech stack
+
+Github
+
+Live demo
+
+Status
+
+Avoid traditional grids.
+
+---
+
+# Skills & Toolbox
+
+Categorized:
+
+Frontend
+
+Backend
+
+AI
+
+Database
+
+Design
+
+DevOps
+
+Represent skills as floating pills.
+
+Hover animation.
+
+Not logo dumps.
+
+---
+
+# GitHub Activity
+
+Contribution graph.
+
+Stats cards.
+
+Commits
+
+Repositories
+
+Stars
+
+Languages
+
+Animated counters.
+
+---
+
+# Coding Profiles
+
+Cards for:
+
+LeetCode
+
+Codeforces
+
+CodeChef
+
+GitHub
+
+Display:
+
+Rating
+
+Solved problems
+
+Badges
+
+Profile links
+
+---
+
+# Stats Dashboard
+
+Animated numbers.
+
+Projects
+
+Commits
+
+Problems Solved
+
+Hackathons
+
+Certificates
+
+Count-up animation.
+
+---
+
+# Currently Exploring
+
+Progress bars.
+
+Machine Learning
+
+System Design
+
+DSA
+
+Web Performance
+
+Beautiful animated bars.
+
+---
+
+# Fun Facts
+
+Interactive cards.
+
+Night Owl
+
+Mountain Lover
+
+AI Enthusiast
+
+Competitive Programmer
+
+Music Lover
+
+Cards flip slightly.
+
+---
+
+# Testimonials
+
+Carousel.
+
+Glass cards.
+
+Auto-scroll slowly.
+
+Pause on hover.
+
+---
+
+# Resume Section
+
+Preview card.
+
+Download button.
+
+ATS score.
+
+Experience summary.
+
+---
+
+# Contact
+
+Minimal.
+
+Email
+
+LinkedIn
+
+GitHub
+
+Twitter
+
+CTA:
+
+Let's build something meaningful.
+
+---
+
+# Footer
+
+Designed and developed by Aman Negi.
+
+Minimal and elegant.
+
+---
+
+# Advanced Features
+
+## Command Palette
+
+Ctrl + K
+
+Inspired by Linear.
+
+Allows navigation to:
+
+Projects
+
+Achievements
+
+Resume
+
+Github
+
+LinkedIn
+
+Certificates
+
+---
+
+## Scroll Progress Bar
+
+Thin accent line at top.
+
+Animated using Framer Motion.
+
+---
+
+## Custom Cursor
+
+Tiny dot.
+
+Expands slightly on hover.
+
+No huge circles.
+
+---
+
+## Magnetic Buttons
+
+Subtle pull effect.
+
+---
+
+## Spotlight Hover Effect
+
+Cards react to cursor position.
+
+Very subtle.
+
+---
+
+## Smooth Scrolling
+
+Lenis.
+
+Entire website should feel buttery.
+
+---
+
+## Reveal Animations
+
+Framer Motion.
+
+Fade-up.
+
+Slide.
+
+Scale.
+
+Use stagger.
+
+Animations should feel premium.
+
+---
+
+## Dock Navigation
+
+MacOS-inspired floating dock.
+
+Desktop only.
+
+Bottom center.
+
+---
+
+## Floating Back To Top Button
+
+Appears after scrolling.
+
+---
+
+## Reading Progress
+
+Circular indicator.
+
+---
+
+## Theme Transition
+
+Animate color changes.
+
+No flashes.
+
+---
+
+## Easter Eggs
+
+Typing:
+
+sudo hire aman
+
+Opens terminal modal.
+
+Displays:
+
+Thank you for visiting :)
+
+---
+
+Konami code triggers hidden animation.
+
+---
+
+Double-click logo rotates website briefly.
+
+---
+
+# Background System
+
+Noise texture.
+
+Subtle gradients.
+
+Blur blobs.
+
+Moving spotlight.
+
+Nothing distracting.
+
+---
+
+# Microinteractions
+
+Buttons scale 1.03x.
+
+Cards lift slightly.
+
+Underline links animate smoothly.
+
+Icons rotate subtly.
+
+Hover shadows are soft.
+
+Everything should feel alive.
+
+---
+
+# Motion Principles
+
+Motion should guide attention.
+
+Never distract.
+
+Slow.
+
+Elegant.
+
+Smooth.
+
+Inspired by:
+
+Apple
+
+Linear
+
+Framer
+
+Arc Browser
+
+---
+
+# Technical Stack
+
+Next.js 15
+
+TypeScript
+
+Tailwind CSS v4
+
+Framer Motion
+
+Shadcn UI
+
+Lenis
+
+Motion Primitives
+
+Aceternity UI
+
+React Three Fiber (minimal)
+
+GSAP (minimal)
+
+Vercel
+
+---
+
+# Performance
+
+95+ Lighthouse.
+
+Lazy load images.
+
+Use Next Image.
+
+Keep animations GPU accelerated.
+
+Support reduced motion.
+
+Responsive on all screen sizes.
+
+Mobile experience should feel equally premium.
+
+---
+
+# Overall Feeling
+
+The website should feel like a premium software product, not a resume.
+
+Minimal.
+
+Elegant.
+
+Modern.
+
+Memorable.
+
+Visitors should think:
+
+"This person understands design and engineering."
