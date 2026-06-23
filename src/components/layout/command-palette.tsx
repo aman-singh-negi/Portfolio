@@ -27,6 +27,7 @@ const iconMap: Record<string, React.ReactNode> = {
   Contact: <Mail className="h-4 w-4" />,
   GitHub: <Github className="h-4 w-4" />,
   LinkedIn: <Linkedin className="h-4 w-4" />,
+  CodeChef: <Trophy className="h-4 w-4" />,
 };
 
 export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {

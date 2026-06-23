@@ -4,14 +4,13 @@ import { achievements } from "@/lib/data";
 import { Reveal, StaggerContainer, StaggerItem } from "@/components/ui/reveal";
 import { SectionHeader } from "@/components/ui/section-header";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
-import { Trophy, Code, Zap, Rocket, Target } from "lucide-react";
+import { Trophy, Code, Zap } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 const iconComponents = {
   trophy: Trophy,
   code: Code,
   zap: Zap,
-  rocket: Rocket,
-  target: Target,
 };
 
 export function Achievements() {
@@ -30,19 +29,32 @@ export function Achievements() {
           {achievements.map((item) => {
             const Icon =
               iconComponents[item.icon as keyof typeof iconComponents] || Trophy;
+            const Card = (
+              <SpotlightCard className="group h-full">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10 text-accent transition-transform duration-300 group-hover:rotate-6">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="mt-4 font-heading text-lg font-semibold">{item.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  {item.description}
+                </p>
+                {"link" in item && item.link && (
+                  <span className="mt-4 inline-flex items-center gap-1 text-xs text-accent opacity-0 transition-opacity group-hover:opacity-100">
+                    View profile <ExternalLink className="h-3 w-3" />
+                  </span>
+                )}
+              </SpotlightCard>
+            );
+
             return (
               <StaggerItem key={item.title}>
-                <SpotlightCard className="group h-full">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/10 text-accent transition-transform duration-300 group-hover:rotate-6">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="mt-4 font-heading text-lg font-semibold">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    {item.description}
-                  </p>
-                </SpotlightCard>
+                {"link" in item && item.link ? (
+                  <a href={item.link} target="_blank" rel="noopener noreferrer">
+                    {Card}
+                  </a>
+                ) : (
+                  Card
+                )}
               </StaggerItem>
             );
           })}
