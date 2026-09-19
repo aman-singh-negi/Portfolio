@@ -24,17 +24,30 @@ export const metadata: Metadata = {
   keywords: ["Aman Singh Negi", "Software Engineer", "Full Stack Developer", "AI", "Machine Learning", "Computer Science", "Portfolio"],
   authors: [{ name: "Aman Singh Negi" }],
   creator: "Aman Singh Negi",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: "Aman Singh Negi - Software Engineer",
     description: "Engineering ideas into working software. Fourth-year Computer Science student building products across software engineering, AI, and the web.",
     type: "website",
     url: "https://amansinghnegi.vercel.app",
     siteName: "Aman Singh Negi Portfolio",
+    images: [
+      {
+        url: "/favicon.png",
+        width: 512,
+        height: 512,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Aman Singh Negi - Software Engineer",
     description: "Engineering ideas into working software. Fourth-year Computer Science student building products across software engineering, AI, and the web.",
+    images: ["/favicon.png"],
   },
   robots: {
     index: true,
