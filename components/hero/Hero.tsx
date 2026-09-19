@@ -48,11 +48,19 @@ export function Hero() {
             transition={{ delay: 0.8, duration: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button variant="primary" className="w-full sm:w-auto justify-center">
-              <a href="#work">View My Work</a>
+            <Button
+              variant="primary"
+              className="w-full sm:w-auto justify-center"
+              onClick={() => window.location.href = '#work'}
+            >
+              View My Work
             </Button>
-            <Button variant="secondary" className="w-full sm:w-auto justify-center">
-              <a href="#resume">Resume</a>
+            <Button
+              variant="secondary"
+              className="w-full sm:w-auto justify-center"
+              onClick={() => window.location.href = '#resume'}
+            >
+              Resume
             </Button>
           </motion.div>
           

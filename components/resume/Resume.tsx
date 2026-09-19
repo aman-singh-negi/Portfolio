@@ -17,15 +17,22 @@ export function Resume() {
       </p>
       
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button variant="primary">
-          <a href="/Aman_Resume.pdf" target="_blank" rel="noopener noreferrer">
-            View Resume
-          </a>
+        <Button
+          variant="primary"
+          onClick={() => window.open('/Aman_Resume.pdf', '_blank')}
+        >
+          View Resume
         </Button>
-        <Button variant="secondary">
-          <a href="/Aman_Resume.pdf" download>
-            Download PDF
-          </a>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            const link = document.createElement('a');
+            link.href = '/Aman_Resume.pdf';
+            link.download = 'Aman_Resume.pdf';
+            link.click();
+          }}
+        >
+          Download PDF
         </Button>
       </div>
       

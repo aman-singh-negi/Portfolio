@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 export function Transition() {
-  const words = ['PRODUCTS.', 'SYSTEMS.', 'EXPERIMENTS.'];
+  const words = ['SOFTWARE.', 'SYSTEMS.', 'PRODUCTS.'];
 
   return (
     <section className="py-20 bg-[#FFFFFF]">
