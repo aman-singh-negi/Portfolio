@@ -28,6 +28,11 @@ export function Education() {
               <span className="text-[#999999]">Relevant Coursework:</span> {edu.coursework.join(', ')}
             </div>
           )}
+          {edu.activities && edu.activities.length > 0 && (
+            <div className="mt-2 text-sm text-[#666666]">
+              <span className="text-[#999999]">Activities:</span> {edu.activities.join(', ')}
+            </div>
+          )}
         </motion.div>
       ))}
     </div>

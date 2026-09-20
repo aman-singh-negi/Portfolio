@@ -7,17 +7,19 @@ export const education = [
     coursework: ["Operating Systems", "DBMS", "Algorithms", "AI/ML"]
   },
   {
-    degree: "Class 12th",
+    degree: "Class 12th (PCM+CS)",
     institution: "Kendriya Vidyalaya Sangathan, Haridwar, Uttarakhand",
     percentage: "92.4%",
     duration: "Apr 2022 - Apr 2023",
-    coursework: []
+    coursework: [],
+    activities: ["School Head Boy"]
   },
   {
     degree: "Class 10th",
     institution: "Kendriya Vidyalaya Sangathan, Haridwar, Uttarakhand",
     percentage: "94.8%",
     duration: "Apr 2020 - Apr 2021",
-    coursework: []
+    coursework: [],
+    activities: ["Regional Basketball Player"]
   }
 ];
