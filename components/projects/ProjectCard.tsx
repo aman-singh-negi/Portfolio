@@ -14,6 +14,7 @@ interface ProjectCardProps {
     image: string;
     github: string;
     slug: string;
+    date: string;
   };
   index: number;
 }
@@ -41,11 +42,13 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         
         <h3 className="text-xl font-bold text-[#111111] mb-2">{project.title}</h3>
         
+        <div className="text-sm text-[#999999] mb-2 font-mono">{project.date}</div>
+        
         <p className="text-[#666666] mb-4 flex-grow">{project.description}</p>
         
         <div className="flex gap-4">
           <Link href={`/work/${project.slug}`} external={false}>
-            Case Study →
+            Detailed Description →
           </Link>
           <Link href={project.github} external>
             GitHub
