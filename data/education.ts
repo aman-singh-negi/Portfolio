@@ -12,5 +12,12 @@ export const education = [
     percentage: "92.4%",
     duration: "Apr 2022 - Apr 2023",
     coursework: []
+  },
+  {
+    degree: "Class 10th",
+    institution: "Kendriya Vidyalaya Sangathan, Haridwar, Uttarakhand",
+    percentage: "94.8%",
+    duration: "Apr 2020 - Apr 2021",
+    coursework: []
   }
 ];
