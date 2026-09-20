@@ -19,6 +19,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://amansinghnegi.vercel.app"),
   title: "Aman Singh Negi - Software Engineer",
   description: "Engineering ideas into working software. Fourth-year Computer Science student building products across software engineering, AI, and the web.",
   keywords: ["Aman Singh Negi", "Software Engineer", "Full Stack Developer", "AI", "Machine Learning", "Computer Science", "Portfolio"],
