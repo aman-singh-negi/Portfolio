@@ -17,7 +17,7 @@ export function About() {
         className="space-y-6"
       >
         <p className="text-lg text-[#666666] leading-relaxed">
-          I'm a fourth-year Computer Science student at {currentEdu.institution} (CGPA: {currentEdu.cgpa}) passionate about software engineering, AI, and building products that solve practical problems. I enjoy working across the stack — from interfaces to intelligent systems — and have experience with reinforcement learning, computer vision, and full-stack development.
+          I'm a fourth-year Computer Science student at {currentEdu.institution} (CGPA: {currentEdu.cgpa}) passionate about software engineering, AI, and building products that solve practical problems. I enjoy working across the stack — from interfaces to intelligent systems — and have experience with reinforcement learning, computer vision, and full-stack development. I'm particularly interested in distributed systems architecture and designing scalable solutions that can handle real-world production demands.
         </p>
 
         <motion.div
